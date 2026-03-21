@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sustainable Road Construction Using Plastic Waste — Research Portal</title>
+  <meta name="description" content="In-depth technical research on plastic waste integration in bituminous road construction. Comprehensive analysis for academic and professional reference." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAVBAR ════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#hero" class="nav-brand">
+      <div class="brand-dot"></div>
+      <div>
+        <div class="brand-name">PlasticRoads</div>
+        <div class="brand-sub">Research Portal</div>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#problem"     class="nav-link">Problem</a></li>
+      <li><a href="#technology"  class="nav-link">Technology</a></li>
+      <li><a href="#process"     class="nav-link">Process</a></li>
+      <li><a href="#benefits"    class="nav-link">Benefits</a></li>
+      <li><a href="#casestudies" class="nav-link">Case Studies</a></li>
+      <li><a href="#comparison"  class="nav-link">Comparison</a></li>
+      <li><a href="#challenges"  class="nav-link">Challenges</a></li>
+      <li><a href="#future"      class="nav-link">Future</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ═════════════════════════════════ -->
+<section id="hero" class="hero">
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-animate style="--delay:0s">
+      <span class="badge-dot"></span>Civil Engineering · Sustainable Infrastructure
+    </div>
+    <h1 class="hero-title">
+      <span class="ht-1" data-animate style="--delay:.1s">Sustainable Road</span>
+      <span class="ht-2" data-animate style="--delay:.25s">Construction Using</span>
+      <span class="ht-3" data-animate style="--delay:.4s">Plastic Waste</span>
+    </h1>
+    <p class="hero-subtitle" data-animate style="--delay:.55s">
+      A comprehensive technical analysis of waste plastic integration in bituminous pavement — materials, chemistry, process engineering, environmental impact, and scalability.
+    </p>
+    <div class="hero-meta" data-animate style="--delay:.65s">
+      <span>Om Shiva &nbsp;&middot;&nbsp; 1608-24-732-307</span>
+      <span class="meta-sep">|</span>
+      <span>Matrusri Engineering College</span>
+    </div>
+    <div class="hero-stats" data-animate style="--delay:.75s">
+      <div class="h-stat">
+        <span class="h-stat-num counter" data-target="3.5" data-decimals="1">0</span><span class="h-stat-sfx">M</span>
+        <span class="h-stat-label">Tonnes plastic waste<br>generated in India / yr</span>
+      </div>
+      <div class="h-stat-div"></div>
+      <div class="h-stat">
+        <span class="h-stat-num counter" data-target="100" data-decimals="0">0</span><span class="h-stat-sfx">K+</span>
+        <span class="h-stat-label">Kilometres of plastic<br>roads built in India</span>
+      </div>
+      <div class="h-stat-div"></div>
+      <div class="h-stat">
+        <span class="h-stat-num counter" data-target="15" data-decimals="0">0</span><span class="h-stat-sfx">%</span>
+        <span class="h-stat-label">Reduction in bitumen<br>usage per kilometre</span>
+      </div>
+    </div>
+    <div class="hero-actions" data-animate style="--delay:.85s">
+      <a href="#problem" class="btn-primary">Explore Research</a>
+      <a href="#process" class="btn-outline">View Process</a>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PROBLEM ══════════════════════════════ -->
+<section id="problem" class="section section-dark">
+  <div class="container">
+    <div class="section-label" data-animate>01 — The Problem</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">India Is Drowning in Plastic<br><em>and Driving on Broken Roads</em></h2>
+    <p class="section-intro" data-animate style="--delay:.2s">Two independent crises — plastic waste accumulation and deteriorating road infrastructure — are converging into a national emergency. Understanding each is essential to appreciating why plastic roads are not just innovative, but necessary.</p>
+
+    <div class="problem-grid">
+      <!-- Card 1 -->
+      <div class="prob-card prob-plastic" data-animate style="--delay:.1s">
+        <div class="prob-card-img">
+          <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=700&auto=format&fit=crop&q=80" alt="Plastic waste accumulation" loading="lazy" />
+          <div class="img-overlay"></div>
+          <div class="img-tag">Crisis 01 — Plastic Waste</div>
+        </div>
+        <div class="prob-card-body">
+          <h3>The Plastic Waste Crisis</h3>
+          <p>India generates <strong>3.5 million tonnes</strong> of plastic waste annually, of which only <strong>60% is collected</strong> through formal channels. The remaining 40% contaminates rivers, soil, and coastal areas. Of collected plastic, a significant fraction — particularly <strong>Low Density Polyethylene (LDPE)</strong> and multi-layer packaging — is <em>technically non-recyclable</em> through conventional methods.</p>
+          <div class="prob-stats-row">
+            <div class="prob-mini-stat"><span class="counter" data-target="60" data-decimals="0">0</span><span>%</span><small>Collection rate</small></div>
+            <div class="prob-mini-stat"><span class="counter" data-target="43" data-decimals="0">0</span><span>%</span><small>Non-recyclable fraction</small></div>
+            <div class="prob-mini-stat"><span class="counter" data-target="15" data-decimals="0">0</span><span>M</span><small>Plastic bags/day in India</small></div>
+          </div>
+          <ul class="prob-list">
+            <li>LDPE, LLDPE, and PET form the bulk of non-recyclable urban waste</li>
+            <li>Open burning releases dioxins, furans, and particulate matter PM2.5</li>
+            <li>Plastic leaches into groundwater over 400–1000 year decomposition periods</li>
+            <li>Microplastic contamination now detected in 75% of Indian river systems</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="prob-card prob-road" data-animate style="--delay:.2s">
+        <div class="prob-card-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&auto=format&fit=crop&q=80" alt="Damaged road with potholes" loading="lazy" />
+          <div class="img-overlay"></div>
+          <div class="img-tag">Crisis 02 — Road Infrastructure</div>
+        </div>
+        <div class="prob-card-body">
+          <h3>The Road Infrastructure Failure</h3>
+          <p>India has the <strong>second largest road network in the world</strong> at 6.37 million km, yet nearly <strong>40% of roads</strong> are in poor condition due to inadequate pavement design, poor drainage, and premature failure. Conventional bituminous roads fail primarily due to water ingress, rutting under heavy loads, and thermal cracking — problems directly addressable by plastic integration.</p>
+          <div class="prob-stats-row">
+            <div class="prob-mini-stat"><span class="counter" data-target="6.37" data-decimals="2">0</span><span>M</span><small>km total network</small></div>
+            <div class="prob-mini-stat"><span>₹1T+</span><small>Annual maintenance cost</small></div>
+            <div class="prob-mini-stat"><span class="counter" data-target="2500" data-decimals="0">0</span><span>+</span><small>Deaths/yr (potholes)</small></div>
+          </div>
+          <ul class="prob-list">
+            <li>Average pavement life: only 5–8 years before major resurfacing is needed</li>
+            <li>Water penetration into base course causes stripping and sub-grade failure</li>
+            <li>Rutting depth exceeds 10mm within 2 years on high-traffic national highways</li>
+            <li>IRC specifications frequently compromised due to cost pressures on contractors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Root cause diagram -->
+    <div class="root-cause-box" data-animate style="--delay:.3s">
+      <div class="rc-left">
+        <div class="rc-node rc-node-red">Plastic Waste<br><small>Non-recyclable LDPE accumulates</small></div>
+        <div class="rc-arrow-down"></div>
+        <div class="rc-node rc-node-orange">Environmental<br>Degradation<br><small>Soil, water, air contamination</small></div>
+      </div>
+      <div class="rc-center">
+        <div class="rc-plus">+</div>
+        <div class="rc-question">What if we could<br>solve both<br>simultaneously?</div>
+        <div class="rc-arrow-right">→</div>
+        <div class="rc-node rc-node-green">Plastic Roads<br><small>The unified solution</small></div>
+      </div>
+      <div class="rc-right">
+        <div class="rc-node rc-node-red">Road Failure<br><small>Premature cracking &amp; potholes</small></div>
+        <div class="rc-arrow-down"></div>
+        <div class="rc-node rc-node-orange">Economic Loss<br><small>₹1T+ annual maintenance spend</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ TECHNOLOGY ═══════════════════════════ -->
+<section id="technology" class="section section-light">
+  <div class="container">
+    <div class="section-label" data-animate>02 — The Technology</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">What Are Plastic Roads?<br><em>Science, History &amp; Materials</em></h2>
+    <p class="section-intro" data-animate style="--delay:.2s">Plastic roads are bituminous pavements where a portion of bitumen is replaced by thermoplastic waste — primarily LDPE — through a dry process that coats stone aggregates with a thin plastic film before binding with bitumen.</p>
+
+    <!-- Inventor highlight -->
+    <div class="inventor-card" data-animate style="--delay:.25s">
+      <div class="inv-icon">🎓</div>
+      <div class="inv-body">
+        <div class="inv-label">The Inventor</div>
+        <h3>Prof. R. Vasudevan — "The Plastic Man of India"</h3>
+        <p>In 2001–02, <strong>Professor Rajagopalan Vasudevan</strong> of Thiagarajar College of Engineering, Madurai, discovered that shredded plastic waste, when melted over hot stone aggregates, creates a superior binder matrix. He patented the <em>dry process method</em> and donated the technology royalty-free to the Government of India. His invention has since been codified in <strong>IRC:SP:98-2013</strong> — the official Indian Roads Congress specification for plastic roads.</p>
+      </div>
+    </div>
+
+    <!-- Three-column material cards -->
+    <div class="mat-grid">
+      <div class="mat-card" data-animate style="--delay:.1s">
+        <div class="mat-icon-wrap mat-bitumen">
+          <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/><path d="M12 28 Q20 10 28 28" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="20" cy="20" r="4" fill="currentColor"/></svg>
+        </div>
+        <div class="mat-num">Material 01</div>
+        <h3>Bitumen (VG-30)</h3>
+        <div class="mat-spec-row">
+          <span class="spec-pill">Viscosity Grade 30</span>
+          <span class="spec-pill">60°C penetration</span>
+        </div>
+        <p>Viscosity Grade 30 (VG-30) bitumen per <strong>IS 73:2013</strong> serves as the primary binder. It has a softening point of 47–55°C, penetration value of 45–79 (1/10 mm), and flash point &gt;220°C. In plastic roads, 10–15% of bitumen by weight is replaced by waste plastic, reducing both material cost and thermal sensitivity of the mix.</p>
+        <ul class="mat-specs">
+          <li>Specific gravity: 1.01 – 1.05</li>
+          <li>Ductility at 25°C: &gt;40 cm</li>
+          <li>Solubility in TCE: &gt;99%</li>
+          <li>Loss on heating: &lt;0.2%</li>
+        </ul>
+      </div>
+
+      <div class="mat-card" data-animate style="--delay:.2s">
+        <div class="mat-icon-wrap mat-aggregate">
+          <svg viewBox="0 0 40 40" fill="none"><polygon points="20,4 36,28 4,28" stroke="currentColor" stroke-width="2" fill="none"/><polygon points="20,14 30,28 10,28" stroke="currentColor" stroke-width="1.5" fill="none" opacity=".5"/></svg>
+        </div>
+        <div class="mat-num">Material 02</div>
+        <h3>Stone Aggregates</h3>
+        <div class="mat-spec-row">
+          <span class="spec-pill">6 mm – 20 mm</span>
+          <span class="spec-pill">Crushed granite</span>
+        </div>
+        <p>Crushed granite or basalt in graded sizes (coarse: 10–20mm, fine: 2.36–6mm, stone dust: &lt;2.36mm) forms the structural skeleton per <strong>IRC:SP:98-2013</strong> gradation. Aggregates must have a Los Angeles Abrasion value &lt;30%, impact value &lt;24%, and water absorption &lt;2% to ensure durability in plastic-modified mixes.</p>
+        <ul class="mat-specs">
+          <li>LA Abrasion value: &lt;30%</li>
+          <li>Aggregate Impact Value: &lt;24%</li>
+          <li>Flakiness + Elongation: &lt;35%</li>
+          <li>Stripping value: &lt;25%</li>
+        </ul>
+      </div>
+
+      <div class="mat-card" data-animate style="--delay:.3s">
+        <div class="mat-icon-wrap mat-plastic">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M8 32 Q12 8 20 8 Q28 8 32 32" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 32 Q16 16 20 16 Q24 16 28 32" stroke="currentColor" stroke-width="1.5" fill="none" opacity=".6"/></svg>
+        </div>
+        <div class="mat-num">Material 03</div>
+        <h3>Waste Plastic (LDPE)</h3>
+        <div class="mat-spec-row">
+          <span class="spec-pill">LDPE / LLDPE</span>
+          <span class="spec-pill">2.36 – 4.75 mm shreds</span>
+        </div>
+        <p>Low-Density Polyethylene (LDPE, density 0.917–0.940 g/cm³) and Linear Low-Density Polyethylene (LLDPE) from carry bags, packaging films, and multi-layer wrappers are preferred. These melt at <strong>105–115°C</strong> and blend uniformly with aggregates at 160–170°C. Rigid plastics (PVC, PET) are <em>strictly excluded</em> due to toxic off-gassing at mix temperatures.</p>
+        <ul class="mat-specs">
+          <li>Shred size: 2.36 – 4.75 mm</li>
+          <li>Melting point: 105 – 115°C</li>
+          <li>Mix proportion: 8–10% by weight of bitumen</li>
+          <li>Moisture content: &lt;1% before use</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Chemistry Note -->
+    <div class="chemistry-box" data-animate style="--delay:.35s">
+      <div class="chem-label">⚗ Chemistry Note</div>
+      <p>When LDPE is heated to 160–170°C over hot aggregates, it undergoes <strong>physical melting</strong> (not chemical decomposition). The molten film wets the aggregate surface and, upon adding bitumen, creates an interpenetrating polymer network. This <em>polymer-bitumen matrix</em> has higher viscosity, improved rutting resistance, and reduced temperature susceptibility compared to unmodified bitumen. The reaction is purely thermophysical — no hazardous by-products are generated within the specified temperature range.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PROCESS ══════════════════════════════ -->
+<section id="process" class="section section-dark">
+  <div class="container">
+    <div class="section-label" data-animate>03 — Construction Process</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">The Dry Process Method<br><em>Step-by-Step Engineering</em></h2>
+    <p class="section-intro" data-animate style="--delay:.2s">The dry process — the only method approved under IRC:SP:98-2013 — involves coating hot aggregates with molten plastic before adding bitumen. Unlike the wet process, it produces no toxic fumes and requires no specialized equipment beyond a standard hot mix plant.</p>
+
+    <!-- Flow diagram -->
+    <div class="flow-wrap" data-animate style="--delay:.25s">
+      <div class="flow-row">
+        <div class="flow-step" data-step="1">
+          <div class="fs-number">01</div>
+          <div class="fs-icon">♻️</div>
+          <h4>Collection &amp; Sorting</h4>
+          <p>Plastic waste is collected from households, municipalities, and industry. Only LDPE and LLDPE types are accepted. PVC, PET, and PP are segregated out. Source segregation at collection point ensures mix quality.</p>
+          <div class="fs-spec">Temperature: Ambient · No chemicals needed</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step" data-step="2">
+          <div class="fs-number">02</div>
+          <div class="fs-icon">🧹</div>
+          <h4>Cleaning &amp; Drying</h4>
+          <p>Collected plastic is washed with water to remove grease, food residue, and soil. Dried to moisture &lt;1%. Colour-sorting removes chlorinated plastics (blue/grey bags often contain PVC). Critical for preventing steam pockets during mixing.</p>
+          <div class="fs-spec">Moisture: &lt;1% · Duration: 4–6 hrs sun drying</div>
+        </div>
+        <div class="flow-arrow">&#8594;</div>
+        <div class="flow-step" data-step="3">
+          <div class="fs-number">03</div>
+          <div class="fs-icon">⚙️</div>
+          <h4>Shredding</h4>
+          <p>Dried plastic is fed into a twin-shaft shredder producing uniform flakes of <strong>2.36–4.75 mm</strong>. Size uniformity is critical — oversized pieces don't melt completely; undersized particles clump. Output is weighed at 8–10% of bitumen weight per batch.</p>
+          <div class="fs-spec">Size: 2.36–4.75 mm · Throughput: 50–200 kg/hr</div>
+        </div>
+      </div>
+
+      <div class="flow-connector-down">
+        <div class="fcd-line"></div>
+        <div class="fcd-arrow">&#8595;</div>
+      </div>
+
+      <div class="flow-row flow-row-reverse">
+        <div class="flow-step" data-step="6">
+          <div class="fs-number">06</div>
+          <div class="fs-icon">🛣️</div>
+          <h4>Laying &amp; Compaction</h4>
+          <p>Mix is transported in insulated trucks and laid at <strong>110–120°C</strong> using a conventional paver finisher. Compacted in two passes: a vibratory roller (initial) and a pneumatic-tyred roller (finishing). Final density must achieve &gt;98% of Marshall density.</p>
+          <div class="fs-spec">Lay temp: 110–120°C · Min. compaction: 98%</div>
+        </div>
+        <div class="flow-arrow flow-arrow-left">&#8592;</div>
+        <div class="flow-step" data-step="5">
+          <div class="fs-number">05</div>
+          <div class="fs-icon">🪣</div>
+          <h4>Bitumen Addition &amp; Final Mix</h4>
+          <p>Hot VG-30 bitumen (160°C) is added to the plastic-coated aggregates at the rate specified by the mix design (typically 5–6% by weight of aggregate). The combined mix is blended in the pug mill for 30–45 seconds to achieve uniform coating.</p>
+          <div class="fs-spec">Bitumen temp: 160°C · Blend time: 30–45 sec</div>
+        </div>
+        <div class="flow-arrow flow-arrow-left">&#8592;</div>
+        <div class="flow-step" data-step="4">
+          <div class="fs-number">04</div>
+          <div class="fs-icon">🔥</div>
+          <h4>Aggregate Heating &amp; Plastic Coating</h4>
+          <p>Aggregates are heated to <strong>165–170°C</strong> in a rotary drum dryer. At this temperature, shredded plastic is added and tumbled for 30–50 seconds. The plastic melts and forms a thin, uniform film over each aggregate particle — this is the crucial step that differentiates the dry process.</p>
+          <div class="fs-spec">Agg. temp: 165–170°C · Coat time: 30–50 sec</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Temperature timeline -->
+    <div class="temp-timeline" data-animate style="--delay:.3s">
+      <div class="tt-label">Temperature Profile Through the Process</div>
+      <div class="tt-bar">
+        <div class="tt-zone tt-z1"><span>Ambient</span><small>Collection &amp; Drying</small></div>
+        <div class="tt-zone tt-z2"><span>105–115°C</span><small>Plastic Melt Point</small></div>
+        <div class="tt-zone tt-z3"><span>165–170°C</span><small>Coating in Drum</small></div>
+        <div class="tt-zone tt-z4"><span>160°C</span><small>Bitumen Addition</small></div>
+        <div class="tt-zone tt-z5"><span>110–120°C</span><small>Laying &amp; Compact</small></div>
+      </div>
+      <p class="tt-note">⚠ Temperatures must not exceed 180°C at any stage. Above this threshold, LDPE begins to degrade and may release volatile organic compounds including acetaldehyde and formaldehyde.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ BENEFITS ═════════════════════════════ -->
+<section id="benefits" class="section section-light">
+  <div class="container">
+    <div class="section-label" data-animate>04 — Performance Analysis</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">Why Plastic Roads<br><em>Outperform Conventional Bitumen</em></h2>
+
+    <!-- Engineering benefits -->
+    <h3 class="sub-section-title" data-animate style="--delay:.15s">04a &nbsp;—&nbsp; Engineering &amp; Structural Benefits</h3>
+    <div class="ben-grid">
+      <div class="ben-card" data-animate style="--delay:.1s">
+        <div class="ben-stat-big"><span class="counter" data-target="60" data-decimals="0">0</span>%</div>
+        <h4>Higher Marshall Stability</h4>
+        <p>Marshall Stability value increases from <strong>9.5 kN</strong> (conventional) to <strong>15.2 kN</strong> (plastic-modified) — a 60% improvement. This directly translates to higher load-bearing capacity under repeated axle loads, critical for national highways and freight corridors.</p>
+        <div class="ben-source">Source: IRC:SP:98-2013 field test data, Tamil Nadu</div>
+      </div>
+      <div class="ben-card" data-animate style="--delay:.2s">
+        <div class="ben-stat-big"><span class="counter" data-target="70" data-decimals="0">0</span>%</div>
+        <h4>Reduced Water Absorption</h4>
+        <p>The hydrophobic LDPE film coating each aggregate particle creates a near-impermeable barrier. Water absorption drops by 70%, dramatically reducing stripping — the primary failure mode in Indian roads during monsoon. This eliminates sub-grade saturation and base course washout.</p>
+        <div class="ben-source">Source: CRRI Technical Report 2019</div>
+      </div>
+      <div class="ben-card" data-animate style="--delay:.3s">
+        <div class="ben-stat-big"><span class="counter" data-target="2" data-decimals="0">0</span>×</div>
+        <h4>Extended Pavement Life</h4>
+        <p>Field studies across Tamil Nadu and Karnataka show plastic roads have a minimum service life of <strong>10–15 years</strong> compared to 5–8 years for conventional bituminous roads. The improved binding reduces fatigue cracking, rutting, and reflective cracking from thermal cycling.</p>
+        <div class="ben-source">Source: Tamil Nadu Highways Dept. inspection, 2018</div>
+      </div>
+      <div class="ben-card" data-animate style="--delay:.4s">
+        <div class="ben-stat-big"><span class="counter" data-target="40" data-decimals="0">0</span>%</div>
+        <h4>Better Skid Resistance</h4>
+        <p>Plastic-modified surfaces maintain higher texture depth (MTD &gt;0.8mm) through their service life, compared to MTD &lt;0.6mm for conventional surfaces after 5 years. This improves British Pendulum Number (BPN) by ~40%, enhancing road safety — particularly in wet conditions.</p>
+        <div class="ben-source">Source: NIT Trichy bituminous mix analysis, 2020</div>
+      </div>
+    </div>
+
+    <!-- Progress bars -->
+    <div class="progress-section" data-animate style="--delay:.2s">
+      <h3 class="sub-section-title">Performance Parameter Comparison</h3>
+      <div class="progress-item">
+        <div class="pi-label"><span>Durability (service life)</span><span class="pi-compare"><em>Conventional:</em> 5–8 yrs &nbsp;&nbsp; <strong>Plastic:</strong> 10–15 yrs</span></div>
+        <div class="pi-bar-wrap"><div class="pi-bar" data-width="85" style="background: var(--green)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="pi-label"><span>Marshall Stability</span><span class="pi-compare"><em>Conventional:</em> 9.5 kN &nbsp;&nbsp; <strong>Plastic:</strong> 15.2 kN</span></div>
+        <div class="pi-bar-wrap"><div class="pi-bar" data-width="75" style="background: var(--green)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="pi-label"><span>Water Resistance</span><span class="pi-compare"><em>Conventional:</em> Low &nbsp;&nbsp; <strong>Plastic:</strong> Excellent (–70% absorption)</span></div>
+        <div class="pi-bar-wrap"><div class="pi-bar" data-width="90" style="background: var(--green)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="pi-label"><span>Rutting Resistance</span><span class="pi-compare"><em>Conventional:</em> Moderate &nbsp;&nbsp; <strong>Plastic:</strong> High</span></div>
+        <div class="pi-bar-wrap"><div class="pi-bar" data-width="80" style="background: var(--green)"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="pi-label"><span>Fatigue Cracking Resistance</span><span class="pi-compare"><em>Conventional:</em> Moderate &nbsp;&nbsp; <strong>Plastic:</strong> +35% improved</span></div>
+        <div class="pi-bar-wrap"><div class="pi-bar" data-width="70" style="background: var(--mint-dark, #1a7a4a)"></div></div>
+      </div>
+    </div>
+
+    <!-- Economic section -->
+    <h3 class="sub-section-title" data-animate style="--delay:.15s" style="margin-top:4rem">04b &nbsp;—&nbsp; Economic Impact</h3>
+    <div class="eco-row">
+      <div class="eco-stat-card" data-animate style="--delay:.1s">
+        <div class="esc-num">₹4–5L</div>
+        <div class="esc-label">Savings per km of road constructed</div>
+        <p>The reduction in bitumen quantity (10–15% by weight) combined with zero cost of plastic feedstock yields a net saving of ₹4–5 lakh per km at 2023 material prices. On a national highway, this scales to hundreds of crores annually.</p>
+      </div>
+      <div class="eco-stat-card" data-animate style="--delay:.2s">
+        <div class="esc-num">50%</div>
+        <div class="esc-label">Reduction in lifecycle maintenance cost</div>
+        <p>With maintenance intervals extended from 2–3 years to 5–7 years, and resurfacing required after 12+ years vs 6–8 years conventionally, lifecycle cost analysis (LCCA) shows 45–55% savings over a 20-year project horizon.</p>
+      </div>
+      <div class="eco-stat-card" data-animate style="--delay:.3s">
+        <div class="esc-num">₹0</div>
+        <div class="esc-label">Cost of plastic raw material</div>
+        <p>Waste plastic is procured from municipalities and waste management agencies at zero or near-zero cost. In some states, government collection drives deliver sorted plastic directly to road contractors as part of the extended producer responsibility (EPR) framework.</p>
+      </div>
+    </div>
+
+    <!-- Environmental section -->
+    <h3 class="sub-section-title" data-animate style="--delay:.15s" style="margin-top:4rem">04c &nbsp;—&nbsp; Environmental Sustainability</h3>
+    <div class="env-grid">
+      <div class="env-card" data-animate style="--delay:.1s">
+        <div class="env-icon">🌱</div>
+        <h4>1 Tonne Plastic per km</h4>
+        <p>Every kilometre of two-lane plastic road consumes approximately <strong>1 tonne of waste plastic</strong>, equivalent to diverting <strong>1 million carry bags</strong> from landfills or waterways. A 100 km highway project removes 100 tonnes of otherwise-unmanageable LDPE.</p>
+      </div>
+      <div class="env-card" data-animate style="--delay:.2s">
+        <div class="env-icon">🏭</div>
+        <h4>Reduced CO₂ Emissions</h4>
+        <p>Bitumen production is energy-intensive (estimated 0.4–0.5 kg CO₂ per kg bitumen). Replacing 10–15% of bitumen with recycled plastic reduces embodied carbon per km by approximately <strong>8–12 tonnes CO₂-equivalent</strong>, depending on mix design and project scale.</p>
+      </div>
+      <div class="env-card" data-animate style="--delay:.3s">
+        <div class="env-icon">💧</div>
+        <h4>Eliminating Plastic Burning</h4>
+        <p>Open burning of LDPE waste — the most common informal disposal method in India — releases persistent organic pollutants (POPs), dioxins, and PM2.5 particulates. Diverting this material to road construction eliminates this emission source entirely for the plastic consumed.</p>
+      </div>
+      <div class="env-card" data-animate style="--delay:.4s">
+        <div class="env-icon">🔄</div>
+        <h4>Circular Economy Model</h4>
+        <p>The plastic road model embodies <strong>cradle-to-use</strong> circular economy principles — post-consumer plastic waste becomes a durable infrastructure input with a 10–15 year functional life. After road resurfacing, the old plastic-modified layer can potentially be reclaimed and re-used in new mixes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CASE STUDIES ═════════════════════════ -->
+<section id="casestudies" class="section section-dark">
+  <div class="container">
+    <div class="section-label" data-animate>05 — Case Studies</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">Proven at Scale<br><em>India's Plastic Road Story</em></h2>
+    <p class="section-intro" data-animate style="--delay:.2s">India is the global leader in plastic road deployment, with over 100,000 km constructed across 11 states. The technology's adoption story spans two decades from a single college campus road to national policy mandates.</p>
+
+    <div class="cs-grid">
+      <div class="cs-card cs-card-featured" data-animate style="--delay:.1s">
+        <div class="cs-img-wrap">
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=700&auto=format&fit=crop&q=80" alt="Tamil Nadu roads" loading="lazy" />
+          <div class="cs-overlay"></div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-state-badge">Pioneer State</div>
+          <h3>Tamil Nadu</h3>
+          <div class="cs-stats-row">
+            <div class="cs-mini"><span>5,000+</span><small>km constructed</small></div>
+            <div class="cs-mini"><span>2002</span><small>First implementation</small></div>
+            <div class="cs-mini"><span>13+</span><small>Districts covered</small></div>
+          </div>
+          <p>Tamil Nadu became the first state to adopt Prof. Vasudevan's technology on a state-wide scale in 2002. The Tamil Nadu Highways Department mandated plastic roads for all urban roads under the Tamil Nadu Urban Development Fund (TNUDF). Field performance monitoring after 15+ years confirms zero stripping failures and minimal rutting depth (&lt;3mm) on high-traffic routes in Chennai, Madurai, and Coimbatore.</p>
+          <div class="cs-highlight">Performance monitoring after 15 years: &lt;3mm rut depth on NH-44 section (Madurai)</div>
+        </div>
+      </div>
+
+      <div class="cs-card" data-animate style="--delay:.2s">
+        <div class="cs-body">
+          <div class="cs-state-badge">Smart Cities Pioneer</div>
+          <h3>Karnataka</h3>
+          <div class="cs-stats-row">
+            <div class="cs-mini"><span>1,500+</span><small>km in Bengaluru</small></div>
+            <div class="cs-mini"><span>2016</span><small>Smart City mandate</small></div>
+          </div>
+          <p>Bengaluru adopted plastic roads under its Smart City Mission with BBMP deploying plastic-modified bitumen across 1,500+ km of urban arterials and residential roads. The Bengaluru City Corporation reported a <strong>40% drop in pothole complaints</strong> on plastic road sections compared to conventional stretches in the same ward.</p>
+          <div class="cs-highlight">Bruhat Bengaluru Mahanagara Palike: 40% reduction in pothole complaints</div>
+        </div>
+      </div>
+
+      <div class="cs-card" data-animate style="--delay:.3s">
+        <div class="cs-body">
+          <div class="cs-state-badge">Highway Integration</div>
+          <h3>Maharashtra</h3>
+          <div class="cs-stats-row">
+            <div class="cs-mini"><span>800+</span><small>km completed</small></div>
+            <div class="cs-mini"><span>NH stretch</span><small>Mumbai–Pune</small></div>
+          </div>
+          <p>Maharashtra State Road Development Corporation (MSRDC) completed several pilot stretches of the Mumbai–Pune Expressway using plastic-modified bitumen. Additionally, under the Pradhan Mantri Gram Sadak Yojana (PMGSY), rural road connectivity projects in Vidarbha region utilised local plastic waste as road material, reducing project cost by ₹3–4 lakh per km.</p>
+          <div class="cs-highlight">PMGSY Vidarbha: ₹3–4 lakh/km savings over 400+ km of rural roads</div>
+        </div>
+      </div>
+
+      <div class="cs-card" data-animate style="--delay:.4s">
+        <div class="cs-body">
+          <div class="cs-state-badge">Rural Connectivity</div>
+          <h3>Himachal Pradesh &amp; Others</h3>
+          <div class="cs-stats-row">
+            <div class="cs-mini"><span>11</span><small>States adopted</small></div>
+            <div class="cs-mini"><span>100K+</span><small>km total India</small></div>
+          </div>
+          <p>Himachal Pradesh deployed plastic roads in mountainous terrain where freeze-thaw cycling destroys conventional bituminous surfaces within 2–3 years. The plastic-modified mix, with its lower temperature sensitivity (higher Penetration Index), showed <strong>dramatically reduced thermal cracking</strong> in Shimla and Kullu districts. In 2015, the Ministry of Road Transport &amp; Highways issued a circular making plastic roads mandatory for all roads within 50 km of major cities.</p>
+          <div class="cs-highlight">MoRTH 2015 Circular: Mandatory for all roads within 50 km of major cities (populations &gt;500,000)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adoption timeline -->
+    <div class="adoption-timeline" data-animate style="--delay:.3s">
+      <h3 class="sub-section-title">Timeline of Policy Adoption</h3>
+      <div class="at-line">
+        <div class="at-event" data-animate style="--delay:.1s">
+          <div class="at-year">2001</div>
+          <div class="at-dot"></div>
+          <div class="at-desc"><strong>Prof. Vasudevan patents</strong> the dry process at Thiagarajar College, Madurai</div>
+        </div>
+        <div class="at-event" data-animate style="--delay:.2s">
+          <div class="at-year">2002</div>
+          <div class="at-dot"></div>
+          <div class="at-desc"><strong>Tamil Nadu mandates</strong> plastic roads for all urban construction under TNUDF</div>
+        </div>
+        <div class="at-event" data-animate style="--delay:.3s">
+          <div class="at-year">2013</div>
+          <div class="at-dot"></div>
+          <div class="at-desc"><strong>IRC:SP:98-2013</strong> published — official Indian Roads Congress specification for plastic roads</div>
+        </div>
+        <div class="at-event" data-animate style="--delay:.4s">
+          <div class="at-year">2015</div>
+          <div class="at-dot"></div>
+          <div class="at-desc"><strong>MoRTH circular</strong> makes plastic roads mandatory within 50 km of cities with population &gt;500,000</div>
+        </div>
+        <div class="at-event" data-animate style="--delay:.5s">
+          <div class="at-year">2022</div>
+          <div class="at-dot"></div>
+          <div class="at-desc"><strong>NITI Aayog</strong> includes plastic roads in India's circular economy action plan 2030</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ COMPARISON ═══════════════════════════ -->
+<section id="comparison" class="section section-light">
+  <div class="container">
+    <div class="section-label" data-animate>06 — Comparative Analysis</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">Conventional vs Plastic Road<br><em>A Data-Driven Comparison</em></h2>
+
+    <div class="chart-wrap" data-animate style="--delay:.2s">
+      <canvas id="compChart" height="320"></canvas>
+    </div>
+
+    <!-- Comparison table -->
+    <div class="comp-table-wrap" data-animate style="--delay:.3s">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Parameter</th>
+            <th>Conventional Bituminous Road</th>
+            <th class="th-green">Plastic-Modified Road</th>
+            <th>Improvement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Marshall Stability</td>
+            <td>8–10 kN</td>
+            <td class="td-green">14–16 kN</td>
+            <td class="td-imp">+60%</td>
+          </tr>
+          <tr class="tr-alt">
+            <td>Service Life</td>
+            <td>5–8 years</td>
+            <td class="td-green">10–15 years</td>
+            <td class="td-imp">+100%</td>
+          </tr>
+          <tr>
+            <td>Water Absorption</td>
+            <td>3–5%</td>
+            <td class="td-green">0.5–1%</td>
+            <td class="td-imp">–70%</td>
+          </tr>
+          <tr class="tr-alt">
+            <td>Rutting Depth (5 yrs)</td>
+            <td>8–12 mm</td>
+            <td class="td-green">2–4 mm</td>
+            <td class="td-imp">–65%</td>
+          </tr>
+          <tr>
+            <td>Maintenance Interval</td>
+            <td>2–3 years</td>
+            <td class="td-green">5–7 years</td>
+            <td class="td-imp">+133%</td>
+          </tr>
+          <tr class="tr-alt">
+            <td>Construction Cost per km</td>
+            <td>Baseline (₹100%)</td>
+            <td class="td-green">₹95–96% (–4–5%)</td>
+            <td class="td-imp">–4 to –5%</td>
+          </tr>
+          <tr>
+            <td>Lifecycle Cost (20 yr)</td>
+            <td>Baseline (₹100%)</td>
+            <td class="td-green">₹48–55% (–45–50%)</td>
+            <td class="td-imp">–45 to –50%</td>
+          </tr>
+          <tr class="tr-alt">
+            <td>Skid Resistance (BPN)</td>
+            <td>45–50</td>
+            <td class="td-green">60–70</td>
+            <td class="td-imp">+35%</td>
+          </tr>
+          <tr>
+            <td>Temperature Sensitivity</td>
+            <td>High (PI = –1 to +1)</td>
+            <td class="td-green">Low (PI = +2 to +4)</td>
+            <td class="td-imp">Significantly lower</td>
+          </tr>
+          <tr class="tr-alt">
+            <td>Plastic Waste Diverted</td>
+            <td>0 kg/km</td>
+            <td class="td-green">~1,000 kg/km</td>
+            <td class="td-imp">Circular benefit</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CHALLENGES ════════════════════════════ -->
+<section id="challenges" class="section section-dark">
+  <div class="container">
+    <div class="section-label" data-animate>07 — Challenges</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">Limitations &amp; Open Problems<br><em>What Must Be Solved</em></h2>
+    <p class="section-intro" data-animate style="--delay:.2s">No technology is without limitations. Understanding the genuine engineering and systemic challenges of plastic roads is essential for responsible deployment and ongoing research.</p>
+
+    <div class="ch-grid">
+      <div class="ch-card" data-animate style="--delay:.1s">
+        <div class="ch-num">01</div>
+        <div class="ch-icon">🔬</div>
+        <h3>Plastic Segregation &amp; Quality Control</h3>
+        <p>Only LDPE and LLDPE are suitable. Contamination with PVC generates hydrogen chloride gas during heating. Current municipal solid waste (MSW) collection in India has <strong>&lt;30% segregation at source</strong>, meaning significant manual sorting is required before road use — adding labour cost and logistical complexity.</p>
+        <div class="ch-status">
+          <span class="ch-pill ch-pill-orange">Partially Solved</span>
+          <span>Extended Producer Responsibility (EPR) rules under Plastic Waste Management Rules 2022 are driving source segregation improvements</span>
+        </div>
+      </div>
+
+      <div class="ch-card" data-animate style="--delay:.2s">
+        <div class="ch-num">02</div>
+        <div class="ch-icon">🌡️</div>
+        <h3>Temperature Control Criticality</h3>
+        <p>The process window is narrow: <strong>160–180°C</strong>. Below 160°C, plastic doesn't melt adequately; above 180°C, thermal degradation begins. Standard hot-mix plants in India often lack temperature monitoring precision. Additionally, in cold-weather states (Himachal, J&amp;K), maintaining temperature during transport is challenging without insulated equipment.</p>
+        <div class="ch-status">
+          <span class="ch-pill ch-pill-orange">Engineering Challenge</span>
+          <span>Advanced hot mix plant calibration and real-time temperature monitoring systems are being developed under CRRI R&amp;D programmes</span>
+        </div>
+      </div>
+
+      <div class="ch-card" data-animate style="--delay:.3s">
+        <div class="ch-num">03</div>
+        <div class="ch-icon">📋</div>
+        <h3>Standardisation &amp; Contractor Awareness</h3>
+        <p>Despite IRC:SP:98-2013 specifications, <strong>uniform national quality standards</strong> for plastic road construction do not yet exist at the state level. Contractor training is inconsistent. Many contractors modify the process incorrectly (using wet process, wrong plastic types, skipping temperature protocols), resulting in substandard roads that give the technology an undeserved poor reputation.</p>
+        <div class="ch-status">
+          <span class="ch-pill ch-pill-red">Systemic Issue</span>
+          <span>MoRTH is developing mandatory training certification for contractors; NITI Aayog proposes a Plastic Road Quality Mark programme</span>
+        </div>
+      </div>
+
+      <div class="ch-card" data-animate style="--delay:.4s">
+        <div class="ch-num">04</div>
+        <div class="ch-icon">♻️</div>
+        <h3>End-of-Life Reclamation</h3>
+        <p>When a plastic road is eventually milled for resurfacing, the reclaimed asphalt pavement (RAP) contains plastic. Research on whether this plastic-modified RAP can be safely re-used in new mixes without quality degradation is <strong>still ongoing</strong>. Concerns about microplastic release during milling and rain-erosion of road surfaces are being studied by IIT Madras and CRRI.</p>
+        <div class="ch-status">
+          <span class="ch-pill ch-pill-red">Active Research Area</span>
+          <span>IIT Madras and CRRI are conducting long-term leaching and microplastic release studies on plastic-modified pavement surfaces</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FUTURE ═══════════════════════════════ -->
+<section id="future" class="section section-light">
+  <div class="container">
+    <div class="section-label" data-animate>08 — Future Scope</div>
+    <h2 class="section-title" data-animate style="--delay:.1s">The Road Ahead<br><em>Research Frontiers &amp; Policy Potential</em></h2>
+
+    <div class="future-grid">
+      <div class="fu-card" data-animate style="--delay:.1s">
+        <div class="fu-icon fu-icon-1">🚀</div>
+        <h3>National Scale Mandate</h3>
+        <p>Under PM Gati Shakti National Master Plan (2021), India targets 25 km/day of highway construction by 2024. Integrating plastic roads into this pipeline would consume <strong>9+ million tonnes of plastic waste annually</strong> if adopted for 50% of construction — effectively solving India's non-recyclable plastic problem through infrastructure spending.</p>
+        <ul>
+          <li>NITI Aayog Circular Economy Action Plan 2030 includes mandatory plastic road targets</li>
+          <li>PMGSY Phase III guidelines recommend plastic roads for all eligible rural stretches</li>
+          <li>National Highways Authority of India (NHAI) pilot on 500 km of NH network approved</li>
+        </ul>
+      </div>
+
+      <div class="fu-card" data-animate style="--delay:.2s">
+        <div class="fu-icon fu-icon-2">🧪</div>
+        <h3>Nano-Plastic Composites</h3>
+        <p>Researchers at IIT Delhi and NIT Calicut are investigating <strong>nano-HDPE and graphene-plastic composites</strong> as bitumen modifiers. Preliminary results show nano-modified bitumen has viscosity 3× higher than VG-30 at 60°C, potentially eliminating rutting entirely on expressways. This next-generation approach retains the waste-diversion benefit while achieving polymer-modified bitumen (PMB) grade performance at lower cost.</p>
+        <ul>
+          <li>Nano-HDPE particles (&lt;100nm) show 280% increase in storage modulus</li>
+          <li>Graphene-plastic hybrid modifier under patent review at IIT Delhi (2023)</li>
+          <li>Crumb rubber + LDPE hybrid mixes show promise for noise reduction</li>
+        </ul>
+      </div>
+
+      <div class="fu-card" data-animate style="--delay:.3s">
+        <div class="fu-icon fu-icon-3">📡</div>
+        <h3>Smart Road Integration</h3>
+        <p>The dense aggregate skeleton of plastic roads makes them ideal hosts for <strong>embedded IoT infrastructure</strong>: piezoelectric energy harvesters, fibre-optic strain sensors, and inductive EV charging elements. Japan and the Netherlands are piloting solar-integrated plastic road panels. India's Smart Cities Mission 2.0 includes provisions for sensor-embedded roads in 20 pilot cities by 2026.</p>
+        <ul>
+          <li>Piezoelectric tiles embedded below plastic wearing course: 0.5 W/vehicle passage</li>
+          <li>Fibre-optic distributed sensing: real-time monitoring of load, temperature, and moisture</li>
+          <li>Dynamic wireless EV charging lane pilots planned on NH-48 (Delhi–Mumbai)</li>
+        </ul>
+      </div>
+
+      <div class="fu-card" data-animate style="--delay:.4s">
+        <div class="fu-icon fu-icon-4">🌍</div>
+        <h3>Global Replication Potential</h3>
+        <p>India's plastic road model is being studied for replication in Sub-Saharan Africa, Southeast Asia, and South America — regions with both high plastic waste generation and critical road infrastructure deficits. The MacRebur company (UK) and the Preplastico network (Brazil) have adapted the Indian IRC specification for local implementation. The UN Environment Programme (UNEP) identified plastic roads as a "Priority Innovation" in its 2022 Global Plastic Outlook.</p>
+        <ul>
+          <li>Ghana, Kenya, and Rwanda conducting IRC-based pilot projects</li>
+          <li>UNEP classifies as "Priority Innovation" in Global Plastic Outlook 2022</li>
+          <li>World Bank supporting knowledge transfer to 8 developing nations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CONCLUSION ════════════════════════════ -->
+<section id="conclusion" class="section section-dark section-conclusion">
+  <div class="container">
+    <div class="concl-wrap" data-animate style="--delay:.1s">
+      <div class="concl-quote-mark">"</div>
+      <blockquote class="concl-quote">
+        This is not just a road technology.<br>
+        <span class="cq-highlight">This is a shift towards sustainable infrastructure.</span>
+      </blockquote>
+      <p class="concl-body">Plastic roads represent a rare convergence of environmental necessity and engineering excellence. By transforming non-recyclable waste into durable infrastructure, the technology simultaneously addresses two of the most pressing challenges of urbanising India — without requiring new chemicals, new equipment, or new supply chains. The evidence across two decades of field deployment is unambiguous: plastic-modified bituminous roads last longer, perform better, and cost less to maintain than their conventional counterparts.</p>
+      <p class="concl-body">For future engineers, researchers, and policymakers, the imperative is clear: scale the deployment, refine the standards, invest in R&amp;D on end-of-life reclamation, and build the contractor training infrastructure that this proven technology deserves.</p>
+      <div class="concl-author">
+        <div class="ca-info">
+          <span class="ca-name">Om Shiva</span>
+          <span class="ca-detail">1608-24-732-307 &nbsp;·&nbsp; Matrusri Engineering College</span>
+          <span class="ca-dept">B.Tech Civil Engineering</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">PlasticRoads Research Portal</div>
+        <p class="footer-desc">A comprehensive academic resource on sustainable pavement engineering using plastic waste. Built for researchers, professors, and policy makers.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Key References</div>
+        <ul class="footer-links">
+          <li>IRC:SP:98-2013 — Guidelines for Use of Waste Plastic in Hot Bituminous Mixes</li>
+          <li>IS 73:2013 — Paving Bitumen Specification</li>
+          <li>CRRI Technical Report on Plastic Roads (2019)</li>
+          <li>MoRTH Circular on Plastic Road Mandate (2015)</li>
+          <li>NITI Aayog Circular Economy Action Plan (2022)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="#problem">The Problem</a></li>
+          <li><a href="#technology">Technology &amp; Materials</a></li>
+          <li><a href="#process">Construction Process</a></li>
+          <li><a href="#benefits">Performance Benefits</a></li>
+          <li><a href="#casestudies">Case Studies</a></li>
+          <li><a href="#comparison">Comparative Analysis</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 — Sustainable Road Construction Research · Om Shiva · Matrusri Engineering College</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
