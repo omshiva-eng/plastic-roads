@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>PlasticRoads — Engineering Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════ RESET + ROOT ══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dark:#0B1D14; --dark2:#112018; --card:#16271E; --card2:#1C3226;
+  --green:#2A9D5C; --greenlt:#3DB870; --greendk:#1A6B3E;
+  --mint:#A8E6C3; --mintm:#6FC99A;
+  --gold:#F4C542; --warn:#E07B39; --red:#D94040;
+  --white:#FFFFFF; --muted:#6B8F7A; --mutedlt:#8FAF9A;
+  --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
+  --display:'Cormorant Garamond',serif;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:var(--body);color:var(--white);user-select:none;-webkit-user-select:none;}
+
+/* ═══════ SCREENS ═══════════════════════════════════════════ */
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;transition:opacity .45s ease,visibility .45s ease;}
+.screen.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+
+/* ─── INTRO ─────────────────────────────────────────────── */
+#intro{background:var(--dark);flex-direction:column;text-align:center;padding:2rem;}
+.intro-badge{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mintm);background:rgba(42,157,92,.1);border:1px solid rgba(42,157,92,.2);padding:.35rem 1rem;border-radius:100px;margin-bottom:1.5rem;display:inline-block;}
+.intro-title{font-family:var(--display);font-size:clamp(2rem,5vw,3.8rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:.75rem;}
+.intro-title em{color:var(--mint);font-style:italic;}
+.intro-sub{font-size:.95rem;color:var(--mutedlt);max-width:560px;line-height:1.75;margin:0 auto 2rem;}
+.steps-preview{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem;max-width:680px;}
+.sp-chip{font-size:.7rem;font-weight:600;padding:.35rem .85rem;border-radius:100px;background:rgba(42,157,92,.1);border:1px solid rgba(42,157,92,.18);color:var(--mintm);display:flex;align-items:center;gap:.4rem;}
+.sp-num{width:18px;height:18px;background:var(--greendk);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--white);font-weight:700;flex-shrink:0;}
+.start-btn{font-size:1rem;font-weight:600;padding:.9rem 2.5rem;background:var(--green);color:var(--white);border:none;border-radius:12px;cursor:pointer;transition:all .3s ease;box-shadow:0 8px 32px rgba(42,157,92,.3);letter-spacing:.04em;}
+.start-btn:hover{background:var(--greenlt);transform:translateY(-2px);box-shadow:0 14px 40px rgba(42,157,92,.4);}
+.controls-hint{font-size:.72rem;color:var(--muted);margin-top:1.25rem;font-family:var(--mono);}
+.key-badge{display:inline-block;background:var(--card2);border:1px solid rgba(42,157,92,.25);border-radius:5px;padding:.1rem .45rem;margin:0 .15rem;font-size:.68rem;}
+
+/* ─── COMPLETE ───────────────────────────────────────────── */
+#complete{background:rgba(11,29,20,.96);backdrop-filter:blur(20px);flex-direction:column;padding:2rem;}
+.complete-title{font-family:var(--display);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;margin-bottom:1rem;text-align:center;}
+.complete-title em{color:var(--gold);}
+.score-circle{width:130px;height:130px;border-radius:50%;border:3px solid var(--green);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.5rem;position:relative;box-shadow:0 0 40px rgba(42,157,92,.3);}
+.score-num{font-family:var(--display);font-size:2.8rem;font-weight:700;color:var(--green);line-height:1;}
+.score-label{font-size:.62rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;max-width:500px;margin:0 auto 1.5rem;}
+.metric-card{background:var(--card);border:1px solid rgba(42,157,92,.15);border-radius:10px;padding:.9rem .75rem;text-align:center;}
+.mc-val{font-family:var(--display);font-size:1.5rem;font-weight:700;color:var(--mint);}
+.mc-lbl{font-size:.62rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:.2rem;}
+.complete-desc{font-size:.85rem;color:var(--mutedlt);text-align:center;max-width:460px;line-height:1.7;margin:0 auto 1.5rem;}
+.complete-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
+.btn-again{padding:.75rem 1.75rem;background:var(--green);color:var(--white);border:none;border-radius:10px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-again:hover{background:var(--greenlt);}
+.btn-back{padding:.75rem 1.75rem;background:transparent;color:var(--mintm);border:1px solid rgba(42,157,92,.3);border-radius:10px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .3s;text-decoration:none;display:inline-flex;align-items:center;}
+.btn-back:hover{border-color:var(--mint);color:var(--mint);}
+
+/* ═══════ GAME CONTAINER ════════════════════════════════════ */
+#game-container{position:fixed;inset:0;display:flex;flex-direction:column;}
+
+/* ─── TOP HUD ────────────────────────────────────────────── */
+#top-hud{height:56px;background:rgba(11,29,20,.92);border-bottom:1px solid rgba(42,157,92,.15);backdrop-filter:blur(12px);display:flex;align-items:center;padding:0 1rem;gap:1rem;flex-shrink:0;z-index:50;}
+.hud-brand{font-family:var(--display);font-size:1rem;font-weight:700;color:var(--white);flex-shrink:0;display:flex;align-items:center;gap:.4rem;}
+.hud-dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 4px var(--green);}50%{box-shadow:0 0 16px var(--green),0 0 32px rgba(42,157,92,.3);}}
+.step-track{display:flex;align-items:center;gap:.3rem;flex:1;overflow:hidden;}
+.step-dot{width:28px;height:28px;border-radius:50%;border:2px solid rgba(42,157,92,.25);display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:all .4s ease;flex-shrink:0;position:relative;}
+.step-dot.done{background:var(--green);border-color:var(--green);color:var(--white);}
+.step-dot.active{border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(244,197,66,.3);animation:stepPulse 1.5s ease-in-out infinite;}
+@keyframes stepPulse{0%,100%{box-shadow:0 0 8px rgba(244,197,66,.25);}50%{box-shadow:0 0 20px rgba(244,197,66,.5);}}
+.step-dot.locked{color:var(--card2);}
+.step-connector{flex:1;height:2px;background:rgba(42,157,92,.12);max-width:40px;transition:background .4s;}
+.step-connector.done{background:var(--green);}
+.hud-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0;}
+.hud-stat{text-align:right;}
+.hud-stat-val{font-family:var(--mono);font-size:.8rem;font-weight:500;color:var(--mint);}
+.hud-stat-lbl{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.back-link{font-size:.72rem;color:var(--muted);text-decoration:none;border:1px solid rgba(42,157,92,.15);border-radius:6px;padding:.3rem .65rem;transition:all .25s;white-space:nowrap;}
+.back-link:hover{color:var(--mint);border-color:rgba(42,157,92,.35);}
+
+/* ─── OBJECTIVE BAR ─────────────────────────────────────── */
+#obj-bar{background:rgba(26,108,62,.15);border-bottom:1px solid rgba(42,157,92,.1);padding:.55rem 1rem;display:flex;align-items:center;gap:.75rem;flex-shrink:0;}
+.obj-icon{font-size:1rem;width:26px;text-align:center;flex-shrink:0;}
+.obj-text{font-size:.8rem;font-weight:500;color:var(--mint);}
+.obj-sub{font-size:.7rem;color:var(--muted);margin-left:.3rem;}
+.obj-hint{font-size:.68rem;color:var(--greendk);font-family:var(--mono);margin-left:auto;padding:.25rem .65rem;background:rgba(42,157,92,.08);border-radius:6px;white-space:nowrap;}
+
+/* ─── CANVAS WRAP ────────────────────────────────────────── */
+#canvas-wrap{flex:1;position:relative;overflow:hidden;}
+#gameCanvas{width:100%;height:100%;display:block;}
+
+/* ─── STATION OVERLAY ────────────────────────────────────── */
+#station-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;background:rgba(7,18,12,.85);backdrop-filter:blur(16px);transition:opacity .35s,visibility .35s;padding:1rem;}
+#station-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.station-modal{background:var(--card);border:1px solid rgba(42,157,92,.2);border-radius:20px;padding:2rem;max-width:580px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.5);}
+.sm-header{display:flex;align-items:center;gap:.85rem;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(42,157,92,.12);}
+.sm-icon{font-size:2rem;width:52px;height:52px;background:rgba(42,157,92,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sm-step-num{font-family:var(--mono);font-size:.65rem;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;}
+.sm-title{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--white);}
+.sm-spec{font-size:.72rem;color:var(--muted);font-family:var(--mono);margin-top:.2rem;}
+.sm-body{margin-bottom:1.5rem;}
+.sm-desc{font-size:.85rem;color:var(--mutedlt);line-height:1.7;margin-bottom:1.25rem;}
+.sm-desc strong{color:var(--white);}
+.sm-action-btn{width:100%;padding:.85rem;background:var(--green);color:var(--white);border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;letter-spacing:.04em;}
+.sm-action-btn:hover:not(:disabled){background:var(--greenlt);transform:translateY(-1px);}
+.sm-action-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* Plastic selector mini-game */
+.plastic-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.25rem;}
+.plastic-card{padding:1rem;background:var(--card2);border:2px solid rgba(42,157,92,.1);border-radius:12px;cursor:pointer;transition:all .3s;text-align:center;}
+.plastic-card:hover{border-color:rgba(42,157,92,.3);}
+.plastic-card.selected{border-color:var(--green);background:rgba(42,157,92,.08);}
+.plastic-card.selected-wrong{border-color:var(--red);background:rgba(217,64,64,.06);}
+.pc-symbol{font-size:1.5rem;margin-bottom:.35rem;}
+.pc-name{font-size:.88rem;font-weight:700;color:var(--white);}
+.pc-desc{font-size:.7rem;color:var(--muted);line-height:1.4;margin-top:.2rem;}
+.pc-badge{display:inline-block;font-size:.6rem;font-weight:700;padding:.15rem .5rem;border-radius:100px;margin-top:.4rem;letter-spacing:.06em;}
+.pc-ok{background:rgba(42,157,92,.15);color:var(--mint);}
+.pc-no{background:rgba(217,64,64,.12);color:#ff8a8a;}
+.feedback-msg{font-size:.78rem;text-align:center;padding:.65rem 1rem;border-radius:8px;margin-bottom:.75rem;}
+.feedback-ok{background:rgba(42,157,92,.1);color:var(--mint);border:1px solid rgba(42,157,92,.2);}
+.feedback-err{background:rgba(217,64,64,.08);color:#ff9a9a;border:1px solid rgba(217,64,64,.2);}
+
+/* Slider mini-game */
+.slider-wrap{margin:1rem 0;}
+.slider-label-row{display:flex;justify-content:space-between;margin-bottom:.5rem;}
+.slider-lbl{font-size:.72rem;color:var(--muted);font-family:var(--mono);}
+.slider-val{font-family:var(--mono);font-size:1.2rem;font-weight:500;color:var(--gold);text-align:center;margin-bottom:.75rem;}
+.range-track{position:relative;height:48px;margin:.5rem 0;}
+input[type=range]{width:100%;height:6px;-webkit-appearance:none;background:var(--card2);border-radius:3px;outline:none;cursor:pointer;position:relative;z-index:2;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:var(--gold);border-radius:50%;cursor:pointer;box-shadow:0 0 10px rgba(244,197,66,.4);}
+.range-zone{position:absolute;bottom:0;height:6px;background:rgba(42,157,92,.3);border-radius:3px;pointer-events:none;}
+.zone-label{position:absolute;top:-18px;font-size:.6rem;color:var(--green);font-family:var(--mono);white-space:nowrap;}
+.slider-status{text-align:center;font-size:.78rem;padding:.4rem;border-radius:6px;margin-top:.5rem;}
+.s-ok{color:var(--mint);}
+.s-err{color:var(--warn-lt,#F59C60);}
+
+/* Temperature mini-game */
+.temp-display{text-align:center;margin:1rem 0;}
+.temp-gauge-wrap{position:relative;width:160px;height:160px;margin:0 auto 1rem;}
+.temp-svg{width:100%;height:100%;}
+.temp-big{font-family:var(--display);font-size:2.4rem;font-weight:700;transition:color .3s;}
+.temp-unit{font-size:.9rem;color:var(--muted);}
+.temp-controls{display:flex;gap:.75rem;justify-content:center;margin:.75rem 0;}
+.temp-btn{width:52px;height:52px;border-radius:50%;border:2px solid rgba(42,157,92,.3);background:var(--card2);color:var(--mint);font-size:1.4rem;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;}
+.temp-btn:hover{border-color:var(--green);background:rgba(42,157,92,.12);}
+.temp-btn:active{transform:scale(.93);}
+.hold-bar-wrap{background:var(--card2);border-radius:100px;height:8px;margin:.5rem 0;}
+.hold-bar{height:100%;background:linear-gradient(to right,var(--green),var(--mint));border-radius:100px;transition:width .1s linear;}
+.temp-hint{font-size:.72rem;color:var(--muted);text-align:center;font-family:var(--mono);}
+
+/* Mixing mini-game */
+.mix-steps{display:flex;flex-direction:column;gap:.65rem;margin:1rem 0;}
+.mix-step{display:flex;align-items:center;gap:.75rem;padding:.85rem 1rem;background:var(--card2);border:1px solid rgba(42,157,92,.1);border-radius:10px;transition:all .3s;}
+.mix-step.active-step{border-color:var(--gold);background:rgba(244,197,66,.04);}
+.mix-step.done-step{border-color:var(--green);background:rgba(42,157,92,.06);}
+.ms-num{width:28px;height:28px;border-radius:50%;border:2px solid rgba(42,157,92,.2);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--muted);}
+.mix-step.active-step .ms-num{border-color:var(--gold);color:var(--gold);}
+.mix-step.done-step .ms-num{border-color:var(--green);background:var(--green);color:var(--white);}
+.ms-info h4{font-size:.85rem;font-weight:600;color:var(--white);}
+.ms-info p{font-size:.72rem;color:var(--muted);margin-top:.1rem;font-family:var(--mono);}
+.ms-btn{margin-left:auto;padding:.4rem .9rem;background:var(--green);color:var(--white);border:none;border-radius:7px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .25s;flex-shrink:0;}
+.ms-btn:disabled{opacity:.35;cursor:not-allowed;}
+.ms-btn:hover:not(:disabled){background:var(--greenlt);}
+.mix-progress-row{display:flex;align-items:center;gap:.75rem;margin:.5rem 0;}
+.mix-progress-bar{flex:1;height:6px;background:var(--card2);border-radius:3px;overflow:hidden;}
+.mix-progress-fill{height:100%;background:var(--green);border-radius:3px;transition:width .2s ease;}
+.mix-progress-pct{font-family:var(--mono);font-size:.72rem;color:var(--mintm);width:32px;text-align:right;}
+
+/* Compaction mini-game */
+.compact-display{text-align:center;margin:1rem 0;}
+.compact-pct{font-family:var(--display);font-size:3rem;font-weight:700;color:var(--green);}
+.compact-bar-wrap{height:14px;background:var(--card2);border-radius:100px;margin:1rem 0;overflow:hidden;}
+.compact-fill{height:100%;border-radius:100px;transition:width .4s ease;}
+.passes-row{display:flex;gap:.6rem;justify-content:center;margin:.75rem 0;}
+.pass-indicator{width:34px;height:34px;border-radius:50%;border:2px solid rgba(42,157,92,.2);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted);transition:all .4s;}
+.pass-indicator.done{background:var(--green);border-color:var(--green);color:var(--white);}
+.pass-btn{width:100%;padding:.85rem;background:var(--greendk);color:var(--white);border:2px solid var(--green);border-radius:10px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .3s;letter-spacing:.04em;}
+.pass-btn:hover:not(:disabled){background:var(--green);}
+.pass-btn:active:not(:disabled){transform:scale(.97);}
+.pass-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* Progress animation bar (reusable) */
+.anim-progress-wrap{margin:1rem 0;}
+.anim-label-row{display:flex;justify-content:space-between;margin-bottom:.4rem;}
+.anim-lbl{font-size:.72rem;color:var(--muted);}
+.anim-val{font-size:.72rem;color:var(--mintm);font-family:var(--mono);}
+.anim-bar{height:8px;background:var(--card2);border-radius:100px;overflow:hidden;}
+.anim-fill{height:100%;background:linear-gradient(to right,var(--green),var(--mint));border-radius:100px;width:0%;transition:width .08s linear;}
+
+/* ═══════ MOBILE JOYSTICK ═══════════════════════════════════ */
+#joystick-zone{position:fixed;bottom:24px;left:24px;z-index:150;display:none;}
+.joystick-base{width:90px;height:90px;border-radius:50%;background:rgba(42,157,92,.1);border:2px solid rgba(42,157,92,.25);position:relative;touch-action:none;}
+.joystick-thumb{width:36px;height:36px;border-radius:50%;background:rgba(42,157,92,.6);border:2px solid var(--green);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 16px rgba(42,157,92,.4);pointer-events:none;transition:transform .05s;}
+#interact-btn{position:fixed;bottom:24px;right:24px;z-index:150;display:none;width:64px;height:64px;border-radius:50%;background:rgba(244,197,66,.15);border:2px solid var(--gold);color:var(--gold);font-size:.68rem;font-weight:700;font-family:var(--mono);letter-spacing:.05em;text-align:center;cursor:pointer;box-shadow:0 0 20px rgba(244,197,66,.2);display:none;align-items:center;justify-content:center;flex-direction:column;line-height:1.2;}
+#interact-btn.visible{display:flex;}
+
+/* ═══════ TOOLTIP ═══════════════════════════════════════════ */
+#tooltip{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(26,39,30,.92);border:1px solid rgba(42,157,92,.25);border-radius:8px;padding:.5rem 1.1rem;font-size:.75rem;color:var(--mint);font-family:var(--mono);pointer-events:none;transition:opacity .3s;opacity:0;z-index:100;white-space:nowrap;}
+#tooltip.show{opacity:1;}
+
+/* ═══════ RESPONSIVE ════════════════════════════════════════ */
+@media(max-width:640px){
+  #joystick-zone,#interact-btn{display:flex;}
+  .step-connector{max-width:16px;}
+  .step-dot{width:22px;height:22px;font-size:.6rem;}
+  .hud-stat{display:none;}
+  .station-modal{padding:1.25rem;}
+  .metrics-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:420px){
+  .intro-title{font-size:1.8rem;}
+  .plastic-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ INTRO SCREEN ═══════════════════════ -->
+<div class="screen" id="intro">
+  <div style="max-width:700px;width:100%;">
+    <div class="intro-badge">🧪 Engineering Simulation · Based on IRC:SP:98-2013</div>
+    <h1 class="intro-title">Build a<br><em>Plastic Road</em></h1>
+    <p class="intro-sub">Experience an authentic, parameter-driven simulation of plastic road construction. Follow the exact IRC dry process — every temperature, proportion, and sequence is grounded in real engineering standards.</p>
+    <div class="steps-preview">
+      <div class="sp-chip"><span class="sp-num">1</span>Sort Plastic</div>
+      <div class="sp-chip"><span class="sp-num">2</span>Shred to 2.36–4.75 mm</div>
+      <div class="sp-chip"><span class="sp-num">3</span>Heat Aggregates 165–170°C</div>
+      <div class="sp-chip"><span class="sp-num">4</span>Coat Aggregates</div>
+      <div class="sp-chip"><span class="sp-num">5</span>Add Bitumen &amp; Mix</div>
+      <div class="sp-chip"><span class="sp-num">6</span>Lay at 110–120°C</div>
+      <div class="sp-chip"><span class="sp-num">7</span>Compact to ≥ 98%</div>
+    </div>
+    <button class="start-btn" id="startBtn">Begin Simulation →</button>
+    <p class="controls-hint">
+      <span class="key-badge">W A S D</span> or <span class="key-badge">Arrow Keys</span> to move &nbsp;·&nbsp;
+      <span class="key-badge">E</span> or <span class="key-badge">Space</span> to interact with stations
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════ GAME ═══════════════════════════════ -->
+<div id="game-container" style="display:none;">
+
+  <!-- Top HUD -->
+  <div id="top-hud">
+    <div class="hud-brand"><div class="hud-dot"></div>PlasticRoads Sim</div>
+    <div class="step-track" id="stepTrack"><!-- built by JS --></div>
+    <div class="hud-right">
+      <div class="hud-stat">
+        <div class="hud-stat-val" id="hudScore">100</div>
+        <div class="hud-stat-lbl">Score</div>
+      </div>
+      <div class="hud-stat">
+        <div class="hud-stat-val" id="hudRoad">0%</div>
+        <div class="hud-stat-lbl">Road</div>
+      </div>
+      <a href="index.html" class="back-link">← Research Portal</a>
+    </div>
+  </div>
+
+  <!-- Objective bar -->
+  <div id="obj-bar">
+    <div class="obj-icon" id="objIcon">♻️</div>
+    <div>
+      <span class="obj-text" id="objText">Head to the Plastic Collection Zone</span>
+      <span class="obj-sub" id="objSub">— Press E or Space when near a glowing station</span>
+    </div>
+    <div class="obj-hint" id="objHint">Step 1 / 7</div>
+  </div>
+
+  <!-- Canvas -->
+  <div id="canvas-wrap">
+    <canvas id="gameCanvas"></canvas>
+  </div>
+</div>
+
+<!-- ═══════════════════════ STATION OVERLAY ═══════════════════ -->
+<div id="station-overlay" class="hidden">
+  <div class="station-modal" id="stationModal">
+    <!-- Filled by JS -->
+  </div>
+</div>
+
+<!-- ═══════════════════════ COMPLETE SCREEN ════════════════════ -->
+<div class="screen hidden" id="complete">
+  <div style="text-align:center;max-width:520px;width:100%;">
+    <div style="font-size:3rem;margin-bottom:1rem;">🛣️</div>
+    <h2 class="complete-title">Road Section<br><em>Complete!</em></h2>
+    <div class="score-circle">
+      <span class="score-num" id="finalScore">—</span>
+      <span class="score-label">Score</span>
+    </div>
+    <div class="metrics-grid" id="metricsGrid"><!-- filled by JS --></div>
+    <p class="complete-desc" id="completeDesc"></p>
+    <div class="complete-actions">
+      <button class="btn-again" id="playAgainBtn">▶ Play Again</button>
+      <a href="index.html" class="btn-back">← Research Portal</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MOBILE CONTROLS ════════════════════ -->
+<div id="joystick-zone">
+  <div class="joystick-base" id="joystickBase">
+    <div class="joystick-thumb" id="joystickThumb"></div>
+  </div>
+</div>
+<div id="interact-btn">E<br>USE</div>
+
+<!-- Tooltip -->
+<div id="tooltip">Walk near a glowing station and press E</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   PLASTIC ROADS — ENGINEERING SIMULATION
+   Full canvas game + HTML mini-game overlays
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── CONSTANTS ─────────────────────────────────────────── */
+const C = {
+  dark:'#0B1D14', dark2:'#112018', card:'#16271E', card2:'#1C3226',
+  green:'#2A9D5C', greenlt:'#3DB870', greendk:'#1A6B3E',
+  mint:'#A8E6C3', mintm:'#6FC99A', gold:'#F4C542',
+  warn:'#E07B39', red:'#D94040', white:'#FFFFFF',
+  muted:'#6B8F7A', mutedlt:'#8FAF9A'
+};
+
+/* ─── STEP DEFINITIONS ─────────────────────────────────── */
+const STEPS = [
+  { id:'collect', icon:'♻️', label:'Sort Plastic', obj:'Head to the Plastic Collection Zone', sub:'Select LDPE and LLDPE — reject PVC and PET', spec:'IRC:SP:98-2013 §4.1' },
+  { id:'shred',   icon:'⚙️', label:'Shred Plastic', obj:'Take plastic to the Shredder Unit', sub:'Set shred size to 2.36–4.75 mm per IRC spec', spec:'Shred size: 2.36–4.75 mm' },
+  { id:'heat',    icon:'🔥', label:'Heat Aggregates', obj:'Go to the Drum Heater', sub:'Hold temperature at 165–170°C for 5 seconds', spec:'Agg. temp: 165–170°C' },
+  { id:'coat',    icon:'🧪', label:'Coat Aggregates', obj:'Add plastic to the hot aggregates', sub:'Plastic coats each aggregate particle uniformly', spec:'Coating time: 30–50 sec' },
+  { id:'bitumen', icon:'🪣', label:'Add Bitumen', obj:'Walk to the Bitumen Tank', sub:'Collect VG-30 bitumen at correct proportion', spec:'Bitumen: 5.5% by weight of aggregate' },
+  { id:'pave',    icon:'🛣️', label:'Lay Road Mix', obj:'Activate the Paver Finisher', sub:'Lay the mix at 110–120°C along the road', spec:'Lay temp: 110–120°C' },
+  { id:'compact', icon:'🛞', label:'Compact', obj:'Use the Vibratory Roller', sub:'Complete 3 passes to reach ≥98% Marshall density', spec:'Min compaction: ≥ 98%' },
+];
+
+/* ─── STATION POSITIONS (% of canvas) ─────────────────── */
+// These get scaled to actual px in layout()
+const STATION_DEFS = [
+  { id:'collect', label:'Collection Zone', color:'#1A5C38', x:.12, y:.22, w:.17, h:.22 },
+  { id:'shred',   label:'Shredder Unit',  color:'#1A4A5C', x:.35, y:.22, w:.17, h:.22 },
+  { id:'heat',    label:'Drum Heater',    color:'#5C3A1A', x:.58, y:.22, w:.17, h:.22 },
+  { id:'bitumen', label:'Bitumen Tank',   color:'#2E2E5C', x:.12, y:.65, w:.17, h:.22 },
+  { id:'pave',    label:'Paver Finisher', color:'#1A5C38', x:.35, y:.65, w:.17, h:.22 },
+  { id:'compact', label:'Vibratory Roller',color:'#3A5C1A',x:.58, y:.65, w:.17, h:.22 },
+];
+
+/* ─── GAME STATE ────────────────────────────────────────── */
+let gs = {};
+function initState() {
+  gs = {
+    step: 0,
+    score: 100,
+    stepsComplete: [],
+    roadProgress: 0,
+    player: { x: 0, y: 0, vx: 0, vy: 0, dir: 0, speed: 220 },
+    stations: [],
+    nearStation: null,
+    particles: [],
+    roadParticles: [],
+    paused: false,
+    metrics: { plasticType:'—', shredSize:'—', maxTemp:'—', mixQuality:'—', layTemp:'—', compaction:'—' },
+    errors: 0,
+  };
+}
+
+/* ─── CANVAS SETUP ──────────────────────────────────────── */
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+let W = 0, H = 0;
+let stations = []; // actual px positions
+
+function layout() {
+  const wrap = document.getElementById('canvas-wrap');
+  W = canvas.width  = wrap.clientWidth;
+  H = canvas.height = wrap.clientHeight;
+  stations = STATION_DEFS.map(d => ({
+    ...d,
+    px: d.x * W, py: d.y * H,
+    pw: d.w * W, ph: d.h * H,
+  }));
+  // Road strip — center of canvas
+  gs.road = {
+    x: stations[0].px,
+    y: H * 0.47,
+    w: W * 0.85,
+    h: H * 0.12,
+  };
+  // Player start
+  if (gs.player.x === 0 && gs.player.y === 0) {
+    gs.player.x = W * 0.5;
+    gs.player.y = H * 0.47 + gs.road.h / 2;
+  }
+}
+
+window.addEventListener('resize', () => { layout(); });
+
+/* ─── INPUT ─────────────────────────────────────────────── */
+const keys = {};
+let joystick = { active: false, x: 0, y: 0, baseX: 0, baseY: 0 };
+
+document.addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if ((e.code === 'KeyE' || e.code === 'Space') && gs.nearStation) {
+    e.preventDefault();
+    openStation(gs.nearStation);
+  }
+});
+document.addEventListener('keyup', e => { keys[e.code] = false; });
+
+// Mobile joystick
+const jBase  = document.getElementById('joystickBase');
+const jThumb = document.getElementById('joystickThumb');
+const intBtn = document.getElementById('interact-btn');
+const R_BASE = 45, R_THUMB = 18;
+
+jBase.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const t = e.touches[0];
+  const rect = jBase.getBoundingClientRect();
+  joystick.active = true;
+  joystick.baseX = rect.left + rect.width / 2;
+  joystick.baseY = rect.top  + rect.height / 2;
+}, { passive: false });
+
+jBase.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (!joystick.active) return;
+  const t = e.touches[0];
+  const dx = t.clientX - joystick.baseX;
+  const dy = t.clientY - joystick.baseY;
+  const dist = Math.hypot(dx, dy);
+  const clamp = Math.min(dist, R_BASE);
+  const nx = (dx / dist) * clamp || 0;
+  const ny = (dy / dist) * clamp || 0;
+  joystick.x = nx / R_BASE;
+  joystick.y = ny / R_BASE;
+  jThumb.style.transform = `translate(calc(-50% + ${nx}px), calc(-50% + ${ny}px))`;
+}, { passive: false });
+
+['touchend','touchcancel'].forEach(ev => jBase.addEventListener(ev, () => {
+  joystick.active = false;
+  joystick.x = joystick.y = 0;
+  jThumb.style.transform = 'translate(-50%, -50%)';
+}));
+
+intBtn.addEventListener('click', () => {
+  if (gs.nearStation) openStation(gs.nearStation);
+});
+
+/* ─── PARTICLES ─────────────────────────────────────────── */
+function spawnParticles(x, y, color, count = 8, spread = 30) {
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = Math.random() * spread + 10;
+    gs.particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 20,
+      r: Math.random() * 3 + 1.5,
+      color,
+      alpha: 1,
+      life: 1,
+      decay: Math.random() * 0.025 + 0.018,
+    });
+  }
+}
+
+function updateParticles(dt) {
+  gs.particles = gs.particles.filter(p => {
+    p.x  += p.vx * dt;
+    p.y  += p.vy * dt;
+    p.vy += 40 * dt; // gravity
+    p.life -= p.decay;
+    p.alpha = p.life;
+    return p.life > 0;
+  });
+}
+
+function drawParticles() {
+  gs.particles.forEach(p => {
+    ctx.save();
+    ctx.globalAlpha = p.alpha;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  });
+}
+
+/* ─── RENDERER ──────────────────────────────────────────── */
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  ctx.fillStyle = C.dark;
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(42,157,92,0.04)';
+  ctx.lineWidth = 1;
+  const grid = Math.min(W, H) / 10;
+  for (let x = 0; x < W; x += grid) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+  for (let y = 0; y < H; y += grid) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+  // Road area background
+  drawRoad();
+
+  // Stations
+  stations.forEach(st => drawStation(st));
+
+  // Particles
+  drawParticles();
+
+  // Player
+  drawPlayer();
+
+  // Proximity ring
+  if (gs.nearStation) {
+    const st = gs.nearStation;
+    const cx = st.px + st.pw / 2, cy = st.py + st.ph / 2;
+    const t = Date.now() / 1000;
+    const pulse = Math.sin(t * 3) * 0.3 + 0.7;
+    ctx.save();
+    ctx.strokeStyle = C.gold;
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = pulse * 0.7;
+    ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.rect(st.px - 6, st.py - 6, st.pw + 12, st.ph + 12);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // "PRESS E" label
+    ctx.save();
+    ctx.fillStyle = C.gold;
+    ctx.globalAlpha = pulse;
+    ctx.font = `bold ${Math.round(H * 0.018)}px DM Mono, monospace`;
+    ctx.textAlign = 'center';
+    ctx.fillText('PRESS E', st.px + st.pw / 2, st.py - 12);
+    ctx.restore();
+  }
+}
+
+function drawRoad() {
+  const r = gs.road;
+  if (!r) return;
+
+  // Road base (empty)
+  ctx.fillStyle = 'rgba(22,39,30,0.5)';
+  roundRect(ctx, r.x, r.y, r.w, r.h, 8);
+  ctx.fill();
+
+  // Dashed center line guide
+  ctx.save();
+  ctx.strokeStyle = 'rgba(42,157,92,0.08)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([12, 8]);
+  ctx.beginPath();
+  ctx.moveTo(r.x, r.y + r.h / 2);
+  ctx.lineTo(r.x + r.w, r.y + r.h / 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // Built portion
+  if (gs.roadProgress > 0) {
+    const bw = r.w * (gs.roadProgress / 100);
+    const grad = ctx.createLinearGradient(r.x, 0, r.x + bw, 0);
+    grad.addColorStop(0,   '#1A3D2A');
+    grad.addColorStop(0.7, '#1F4832');
+    grad.addColorStop(1,   '#244F38');
+    ctx.fillStyle = grad;
+    roundRect(ctx, r.x, r.y, bw, r.h, 8);
+    ctx.fill();
+
+    // Lane markings
+    ctx.save();
+    ctx.strokeStyle = 'rgba(244,197,66,0.25)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([16, 14]);
+    ctx.beginPath();
+    ctx.moveTo(r.x + 8, r.y + r.h / 2);
+    ctx.lineTo(r.x + bw - 8, r.y + r.h / 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Edge lines
+    ctx.strokeStyle = 'rgba(168,230,195,0.18)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([]);
+    [r.y + 4, r.y + r.h - 4].forEach(ly => {
+      ctx.beginPath();
+      ctx.moveTo(r.x, ly);
+      ctx.lineTo(r.x + bw, ly);
+      ctx.stroke();
+    });
+    ctx.restore();
+
+    // Road progress label
+    ctx.fillStyle = C.mintm;
+    ctx.font = `500 ${Math.round(H * 0.016)}px DM Sans, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText(`Road built: ${gs.roadProgress.toFixed(0)}%`, r.x + 8, r.y - 8);
+  } else {
+    ctx.fillStyle = 'rgba(107,143,122,0.25)';
+    ctx.font = `${Math.round(H * 0.015)}px DM Sans, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Road construction area — build from left to right', r.x + r.w / 2, r.y + r.h / 2 + 5);
+  }
+}
+
+function drawStation(st) {
+  const step = STATION_DEFS.findIndex(d => d.id === st.id);
+  const stepIdx = STEPS.findIndex(s => {
+    if (st.id === 'collect') return s.id === 'collect';
+    if (st.id === 'shred')   return s.id === 'shred';
+    if (st.id === 'heat')    return s.id === 'heat' || s.id === 'coat';
+    if (st.id === 'bitumen') return s.id === 'bitumen';
+    if (st.id === 'pave')    return s.id === 'pave';
+    if (st.id === 'compact') return s.id === 'compact';
+    return false;
+  });
+
+  const isDone    = gs.stepsComplete.includes(st.id) || (st.id === 'heat' && gs.stepsComplete.includes('coat'));
+  const isActive  = gs.nearStation && gs.nearStation.id === st.id;
+  const isUnlocked = isStationUnlocked(st.id);
+
+  // Station box
+  ctx.save();
+  ctx.globalAlpha = isUnlocked ? 1 : 0.35;
+
+  // Glow effect when active
+  if (isActive && isUnlocked) {
+    ctx.shadowColor = C.gold;
+    ctx.shadowBlur  = 20;
+  } else if (isDone) {
+    ctx.shadowColor = C.green;
+    ctx.shadowBlur  = 10;
+  } else if (isUnlocked) {
+    ctx.shadowColor = C.green;
+    ctx.shadowBlur  = 6;
+  }
+
+  // Box fill
+  const gradient = ctx.createLinearGradient(st.px, st.py, st.px, st.py + st.ph);
+  gradient.addColorStop(0, isDone ? '#1A3D2A' : (isActive ? '#2A3D1A' : C.card));
+  gradient.addColorStop(1, isDone ? '#122A1C' : (isActive ? '#1E2A12' : C.dark2));
+  ctx.fillStyle = gradient;
+  roundRect(ctx, st.px, st.py, st.pw, st.ph, 10);
+  ctx.fill();
+
+  // Border
+  ctx.strokeStyle = isDone ? C.green : (isActive ? C.gold : 'rgba(42,157,92,0.2)');
+  ctx.lineWidth   = isActive ? 2 : 1.5;
+  ctx.shadowBlur  = 0;
+  roundRect(ctx, st.px, st.py, st.pw, st.ph, 10);
+  ctx.stroke();
+
+  // Top accent bar
+  ctx.fillStyle = isDone ? C.green : (isActive ? C.gold : C.greendk);
+  roundRect(ctx, st.px, st.py, st.pw, 4, 10);
+  ctx.fill();
+
+  // Icon + label
+  const stDef = STEPS.find(s => {
+    if (st.id === 'collect') return s.id === 'collect';
+    if (st.id === 'shred')   return s.id === 'shred';
+    if (st.id === 'heat')    return s.id === 'heat';
+    if (st.id === 'bitumen') return s.id === 'bitumen';
+    if (st.id === 'pave')    return s.id === 'pave';
+    if (st.id === 'compact') return s.id === 'compact';
+  });
+  const icon = isDone ? '✓' : (stDef ? stDef.icon : '?');
+  ctx.font = isDone ? `bold ${Math.round(st.ph * 0.28)}px DM Sans` : `${Math.round(st.ph * 0.3)}px DM Sans`;
+  ctx.fillStyle = isDone ? C.mint : C.white;
+  ctx.textAlign = 'center';
+  ctx.fillText(icon, st.px + st.pw / 2, st.py + st.ph * 0.45);
+
+  // Station name
+  ctx.font = `600 ${Math.max(10, Math.round(st.pw * 0.1))}px DM Sans, sans-serif`;
+  ctx.fillStyle = isDone ? C.mintm : (isUnlocked ? C.white : C.muted);
+  ctx.fillText(st.label, st.px + st.pw / 2, st.py + st.ph * 0.7);
+
+  // Spec text
+  if (stDef) {
+    ctx.font = `${Math.max(8, Math.round(st.pw * 0.075))}px DM Mono, monospace`;
+    ctx.fillStyle = isDone ? 'rgba(168,230,195,0.5)' : 'rgba(107,143,122,0.5)';
+    ctx.fillText(stDef.spec, st.px + st.pw / 2, st.py + st.ph * 0.88);
+  }
+
+  ctx.restore();
+}
+
+function drawPlayer() {
+  const p = gs.player;
+
+  // Shadow
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.beginPath();
+  ctx.ellipse(p.x, p.y + 14, 14, 5, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Glow ring
+  const t = Date.now() / 1000;
+  const glow = Math.sin(t * 2) * 0.15 + 0.85;
+  ctx.shadowColor = C.green;
+  ctx.shadowBlur  = 18 * glow;
+
+  // Body
+  ctx.fillStyle = C.white;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 12, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Inner green
+  ctx.fillStyle = C.green;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Direction indicator
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = C.white;
+  const dirX = p.x + Math.cos(p.dir) * 9;
+  const dirY = p.y + Math.sin(p.dir) * 9;
+  ctx.beginPath();
+  ctx.arc(dirX, dirY, 3, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+/* ─── HELPER ────────────────────────────────────────────── */
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function getStationOrderId(id) {
+  const map = { collect:0, shred:1, heat:2, coat:2, bitumen:4, pave:5, compact:6 };
+  return map[id] ?? 999;
+}
+function isStationUnlocked(id) {
+  if (id === 'collect') return true;
+  if (id === 'shred')   return gs.stepsComplete.includes('collect');
+  if (id === 'heat')    return gs.stepsComplete.includes('shred');
+  if (id === 'bitumen') return gs.stepsComplete.includes('coat');
+  if (id === 'pave')    return gs.stepsComplete.includes('bitumen');
+  if (id === 'compact') return gs.stepsComplete.includes('pave');
+  return false;
+}
+
+/* ─── PROXIMITY DETECTION ───────────────────────────────── */
+function checkNear() {
+  const p = gs.player;
+  const R = Math.min(W, H) * 0.12; // proximity radius
+  let near = null;
+  stations.forEach(st => {
+    if (!isStationUnlocked(st.id)) return;
+    const cx = st.px + st.pw / 2, cy = st.py + st.ph / 2;
+    if (Math.hypot(p.x - cx, p.y - cy) < R + st.pw / 2) {
+      near = st;
+    }
+  });
+  gs.nearStation = near;
+
+  // Mobile interact button
+  const btn = document.getElementById('interact-btn');
+  if (near) btn.classList.add('visible');
+  else btn.classList.remove('visible');
+}
+
+/* ─── PLAYER MOVEMENT ───────────────────────────────────── */
+function movePlayer(dt) {
+  const p = gs.player;
+  let dx = 0, dy = 0;
+
+  if (keys['KeyW'] || keys['ArrowUp'])    dy -= 1;
+  if (keys['KeyS'] || keys['ArrowDown'])  dy += 1;
+  if (keys['KeyA'] || keys['ArrowLeft'])  dx -= 1;
+  if (keys['KeyD'] || keys['ArrowRight']) dx += 1;
+
+  if (joystick.active) {
+    dx = joystick.x;
+    dy = joystick.y;
+  }
+
+  // Normalize diagonal
+  const len = Math.hypot(dx, dy);
+  if (len > 0) { dx /= len; dy /= len; }
+
+  const target_vx = dx * p.speed;
+  const target_vy = dy * p.speed;
+  const lerpF = 1 - Math.pow(0.01, dt * 8);
+  p.vx += (target_vx - p.vx) * lerpF;
+  p.vy += (target_vy - p.vy) * lerpF;
+
+  p.x = Math.max(16, Math.min(W - 16, p.x + p.vx * dt));
+  p.y = Math.max(60, Math.min(H - 16, p.y + p.vy * dt));
+
+  if (Math.hypot(p.vx, p.vy) > 10) {
+    p.dir = Math.atan2(p.vy, p.vx);
+  }
+
+  // Footstep particles
+  if (len > 0.1 && Math.random() < 0.12) {
+    spawnParticles(p.x, p.y + 14, 'rgba(42,157,92,0.25)', 2, 8);
+  }
+}
+
+/* ─── HUD UPDATES ───────────────────────────────────────── */
+function buildStepTrack() {
+  const track = document.getElementById('stepTrack');
+  track.innerHTML = '';
+  STEPS.forEach((step, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'step-dot';
+    const isDone = gs.stepsComplete.includes(step.id) || (step.id === 'coat' && gs.stepsComplete.includes('coat'));
+    const isActive = gs.step === i;
+    if (isDone)   dot.classList.add('done');
+    else if (isActive) dot.classList.add('active');
+    else dot.classList.add('locked');
+    dot.textContent = isDone ? '✓' : step.icon;
+    dot.title = step.label;
+    track.appendChild(dot);
+    if (i < STEPS.length - 1) {
+      const conn = document.createElement('div');
+      conn.className = 'step-connector' + (isDone ? ' done' : '');
+      track.appendChild(conn);
+    }
+  });
+}
+
+function updateHUD() {
+  document.getElementById('hudScore').textContent = gs.score;
+  document.getElementById('hudRoad').textContent  = gs.roadProgress.toFixed(0) + '%';
+
+  const step = STEPS[gs.step];
+  if (step) {
+    document.getElementById('objIcon').textContent = step.icon;
+    document.getElementById('objText').textContent = step.obj;
+    document.getElementById('objSub').textContent  = '— ' + step.sub;
+    document.getElementById('objHint').textContent = `Step ${gs.step + 1} / ${STEPS.length}`;
+  }
+
+  buildStepTrack();
+}
+
+/* ─── STATION MINI-GAMES ────────────────────────────────── */
+function openStation(st) {
+  if (gs.paused) return;
+  const id = st.id;
+
+  // Check if this station is relevant to current step
+  const currentStep = STEPS[gs.step];
+  const stationToStep = {
+    collect: ['collect'],
+    shred:   ['shred'],
+    heat:    ['heat', 'coat'],
+    bitumen: ['bitumen'],
+    pave:    ['pave'],
+    compact: ['compact'],
+  };
+  if (!stationToStep[id] || !stationToStep[id].includes(currentStep?.id)) {
+    showTooltip(`⚠ Complete Step ${gs.step + 1} (${currentStep?.label}) first`);
+    return;
+  }
+
+  gs.paused = true;
+  const overlay = document.getElementById('station-overlay');
+  const modal   = document.getElementById('stationModal');
+  overlay.classList.remove('hidden');
+
+  const stepInfo = currentStep;
+  let html = `
+    <div class="sm-header">
+      <div class="sm-icon">${stepInfo.icon}</div>
+      <div>
+        <div class="sm-step-num">Step ${gs.step + 1} of ${STEPS.length} · ${stepInfo.spec}</div>
+        <div class="sm-title">${stepInfo.label}</div>
+        <div class="sm-spec">${id === 'heat' && gs.stepsComplete.includes('heat') ? 'Now coating aggregates with plastic' : stepInfo.sub}</div>
+      </div>
+    </div>
+    <div class="sm-body">`;
+
+  if (id === 'collect') html += renderCollect();
+  else if (id === 'shred') html += renderShred();
+  else if (id === 'heat' && !gs.stepsComplete.includes('heat')) html += renderHeat();
+  else if (id === 'heat' && gs.stepsComplete.includes('heat')) html += renderCoat();
+  else if (id === 'bitumen') html += renderBitumen();
+  else if (id === 'pave') html += renderPave();
+  else if (id === 'compact') html += renderCompact();
+
+  html += '</div>';
+  modal.innerHTML = html;
+  attachMiniGameEvents(id);
+}
+
+function closeStation(stationId) {
+  document.getElementById('station-overlay').classList.add('hidden');
+  gs.paused = false;
+  spawnParticles(gs.player.x, gs.player.y, C.mint, 16, 45);
+
+  // Progress road
+  const stepProgress = { collect:0, shred:8, heat:16, coat:28, bitumen:42, pave:75, compact:100 };
+  const nextStep = STEPS[gs.step + 1];
+
+  gs.stepsComplete.push(STEPS[gs.step].id);
+  gs.step = Math.min(gs.step + 1, STEPS.length - 1);
+  gs.roadProgress = stepProgress[stationId] ?? gs.roadProgress;
+
+  updateHUD();
+
+  if (gs.stepsComplete.length === STEPS.length || (stationId === 'compact')) {
+    gs.roadProgress = 100;
+    updateHUD();
+    setTimeout(showComplete, 1200);
+  }
+}
+
+/* ── COLLECT MINI-GAME ───────────────────────────────────── */
+function renderCollect() {
+  return `
+    <p class="sm-desc"><strong>Select all suitable plastic types</strong> for road construction. Only LDPE and LLDPE are approved under IRC:SP:98-2013. PVC releases HCl gas when heated; PET has too high a melting point and causes mix defects.</p>
+    <div class="plastic-grid" id="plasticGrid">
+      <div class="plastic-card" data-type="LDPE" data-ok="1">
+        <div class="pc-symbol">🛍</div>
+        <div class="pc-name">LDPE</div>
+        <div class="pc-desc">Carry bags, films, packaging. Melts at 105–115°C. Ideal for dry process.</div>
+        <span class="pc-badge pc-ok">✓ Suitable</span>
+      </div>
+      <div class="plastic-card" data-type="LLDPE" data-ok="1">
+        <div class="pc-symbol">📦</div>
+        <div class="pc-name">LLDPE</div>
+        <div class="pc-desc">Stretch films, flexible packaging. Similar melt range to LDPE.</div>
+        <span class="pc-badge pc-ok">✓ Suitable</span>
+      </div>
+      <div class="plastic-card" data-type="PVC" data-ok="0">
+        <div class="pc-symbol">🧪</div>
+        <div class="pc-name">PVC</div>
+        <div class="pc-desc">Pipes, window frames. Releases HCl gas above 100°C — toxic &amp; corrosive.</div>
+        <span class="pc-badge pc-no">✗ Not Suitable</span>
+      </div>
+      <div class="plastic-card" data-type="PET" data-ok="0">
+        <div class="pc-symbol">🍶</div>
+        <div class="pc-name">PET</div>
+        <div class="pc-desc">Water bottles. Melting point 260°C — won't coat aggregates at 170°C.</div>
+        <span class="pc-badge pc-no">✗ Not Suitable</span>
+      </div>
+    </div>
+    <div id="collectFeedback"></div>
+    <button class="sm-action-btn" id="collectSubmit">Confirm Selection →</button>`;
+}
+
+/* ── SHRED MINI-GAME ────────────────────────────────────── */
+function renderShred() {
+  return `
+    <p class="sm-desc">Set the shredder blade gap to produce plastic shreds of <strong>2.36–4.75 mm</strong>. This size range ensures complete melting at aggregate temperature while avoiding plastic clumping. Too large = incomplete melt; too small = dusting and loss.</p>
+    <div class="slider-wrap">
+      <div class="slider-val" id="shredVal">3.50 mm</div>
+      <div class="range-track">
+        <input type="range" id="shredSlider" min="0.5" max="8" step="0.05" value="3.5"/>
+        <div class="range-zone" id="shredZone" style="left:23%;width:30%;"></div>
+      </div>
+      <div class="slider-label-row">
+        <span class="slider-lbl">0.5 mm<br>(Too fine)</span>
+        <span class="slider-lbl" style="color:var(--green)">2.36–4.75 mm<br>✓ IRC Target</span>
+        <span class="slider-lbl">8 mm<br>(Too coarse)</span>
+      </div>
+    </div>
+    <div class="slider-status" id="shredStatus"></div>
+    <div class="anim-progress-wrap" id="shredProgress" style="display:none">
+      <div class="anim-label-row"><span class="anim-lbl">Shredding…</span><span class="anim-val" id="shredPct">0%</span></div>
+      <div class="anim-bar"><div class="anim-fill" id="shredFill"></div></div>
+    </div>
+    <button class="sm-action-btn" id="shredBtn" disabled>Set Size &amp; Shred →</button>`;
+}
+
+/* ── HEAT MINI-GAME ─────────────────────────────────────── */
+let heatInterval = null;
+function renderHeat() {
+  return `
+    <p class="sm-desc">Control the drum heater to bring aggregates to <strong>165–170°C</strong>. This is the exact window where LDPE melts and coats evenly. Hold the temperature stable for <strong>5 seconds</strong>. Above 180°C: plastic degrades and emits VOCs.</p>
+    <div class="temp-display">
+      <div class="temp-gauge-wrap">
+        <svg class="temp-svg" viewBox="0 0 160 160" id="tempSvg">
+          <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(42,157,92,0.1)" stroke-width="8"/>
+          <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(42,157,92,0.08)" stroke-width="8"
+            stroke-dasharray="440" stroke-dashoffset="0" stroke-linecap="round"/>
+          <!-- Target zone arc (165-170°C out of 50-200°C range) -->
+          <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(42,157,92,0.35)" stroke-width="8"
+            stroke-dasharray="22 418" stroke-dashoffset="-240" stroke-linecap="round"/>
+          <circle cx="80" cy="80" r="70" fill="none" id="tempArc"
+            stroke="#2A9D5C" stroke-width="8"
+            stroke-dasharray="0 440" stroke-dashoffset="-110" stroke-linecap="round"/>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <span class="temp-big" id="tempNum">120</span>
+          <span class="temp-unit">°C</span>
+        </div>
+      </div>
+      <div class="temp-controls">
+        <button class="temp-btn" id="tempDown">−</button>
+        <div style="text-align:center">
+          <div style="font-size:.7rem;color:var(--muted);font-family:var(--mono);">Target</div>
+          <div style="font-size:.9rem;font-weight:600;color:var(--green);">165–170°C</div>
+        </div>
+        <button class="temp-btn" id="tempUp">+</button>
+      </div>
+      <div style="max-width:240px;margin:0 auto;">
+        <div class="anim-label-row"><span class="anim-lbl">Hold timer</span><span class="anim-val" id="holdPct">0%</span></div>
+        <div class="hold-bar-wrap"><div class="hold-bar" id="holdBar" style="width:0%"></div></div>
+        <div class="temp-hint" id="tempHint">Bring temperature into the green zone</div>
+      </div>
+    </div>
+    <button class="sm-action-btn" id="heatBtn" disabled>Aggregates Ready →</button>`;
+}
+
+/* ── COAT MINI-GAME ─────────────────────────────────────── */
+function renderCoat() {
+  return `
+    <p class="sm-desc">Add shredded plastic to the hot aggregates. At <strong>165–170°C</strong>, LDPE melts within 30–50 seconds and forms a uniform film over each aggregate particle. This polymer coating is the key to improved binding and water resistance.</p>
+    <div class="anim-progress-wrap">
+      <div class="anim-label-row"><span class="anim-lbl">Coating progress</span><span class="anim-val" id="coatPct">0%</span></div>
+      <div class="anim-bar"><div class="anim-fill" id="coatFill"></div></div>
+    </div>
+    <div id="coatStatus" style="font-size:.78rem;color:var(--muted);text-align:center;margin:.5rem 0;font-family:var(--mono);">Ready to coat</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin:.75rem 0;">
+      <div style="background:var(--card2);border-radius:8px;padding:.75rem;text-align:center;">
+        <div style="font-family:var(--mono);font-size:.85rem;color:var(--gold);">8–10%</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.15rem;">Plastic / bitumen weight</div>
+      </div>
+      <div style="background:var(--card2);border-radius:8px;padding:.75rem;text-align:center;">
+        <div style="font-family:var(--mono);font-size:.85rem;color:var(--mint);">30–50 sec</div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.15rem;">Coating duration</div>
+      </div>
+    </div>
+    <button class="sm-action-btn" id="coatBtn">▶ Start Coating Process</button>`;
+}
+
+/* ── BITUMEN MINI-GAME ──────────────────────────────────── */
+function renderBitumen() {
+  return `
+    <p class="sm-desc">Collect VG-30 bitumen at the correct proportion. IRC:SP:98-2013 specifies <strong>5.0–6.0% bitumen by weight of aggregate</strong>. The optimal value is determined by the Marshall mix design. Today's mix design calls for 5.5%.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:1rem 0;">
+      <div style="background:var(--card2);border-radius:8px;padding:.75rem;text-align:center;">
+        <div style="font-size:.9rem;font-weight:700;color:var(--mint);font-family:var(--mono);">VG-30</div>
+        <div style="font-size:.63rem;color:var(--muted);margin-top:.2rem;">Bitumen grade</div>
+      </div>
+      <div style="background:var(--card2);border-radius:8px;padding:.75rem;text-align:center;">
+        <div style="font-size:.9rem;font-weight:700;color:var(--green);font-family:var(--mono);">5.5%</div>
+        <div style="font-size:.63rem;color:var(--muted);margin-top:.2rem;">By wt. of aggregate</div>
+      </div>
+      <div style="background:var(--card2);border-radius:8px;padding:.75rem;text-align:center;">
+        <div style="font-size:.9rem;font-weight:700;color:var(--gold);font-family:var(--mono);">160°C</div>
+        <div style="font-size:.63rem;color:var(--muted);margin-top:.2rem;">Collection temp</div>
+      </div>
+    </div>
+    <div class="anim-progress-wrap">
+      <div class="anim-label-row"><span class="anim-lbl">Bitumen transfer</span><span class="anim-val" id="bitPct">0%</span></div>
+      <div class="anim-bar"><div class="anim-fill" id="bitFill"></div></div>
+    </div>
+    <div style="font-size:.75rem;color:var(--muted);text-align:center;margin:.5rem 0;font-family:var(--mono);">IS 73:2013 · Penetration at 25°C: 45–79 (1/10mm) · Softening point: 47–55°C</div>
+    <button class="sm-action-btn" id="bitBtn">Collect Bitumen →</button>`;
+}
+
+/* ── PAVE MINI-GAME ─────────────────────────────────────── */
+function renderPave() {
+  return `
+    <p class="sm-desc">Lay the plastic-modified bituminous mix at <strong>110–120°C</strong> using the paver finisher. The mix must be laid before it drops below 100°C or compaction quality will be compromised. Ensure uniform thickness of <strong>40–50 mm</strong> per layer.</p>
+    <div id="paveStatus" style="text-align:center;font-size:.78rem;color:var(--muted);margin:.75rem 0;font-family:var(--mono);">Ready to pave</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin:.75rem 0;">
+      <div style="background:var(--card2);border-radius:8px;padding:.75rem;text-align:center;">
+        <div id="paveTemp" style="font-family:var(--mono);font-size:1.1rem;color:var(--gold);font-weight:600;">150°C</div>
+        <div style="font-size:.63rem;color:var(--muted);margin-top:.15rem;">Mix temperature</div>
+      </div>
+      <div style="background:var(--card2);border-radius:8px;padding:.75rem;text-align:center;">
+        <div style="font-family:var(--mono);font-size:1.1rem;color:var(--mint);font-weight:600;">40–50 mm</div>
+        <div style="font-size:.63rem;color:var(--muted);margin-top:.15rem;">Layer thickness</div>
+      </div>
+    </div>
+    <div class="anim-progress-wrap">
+      <div class="anim-label-row"><span class="anim-lbl">Road laid</span><span class="anim-val" id="pavePct">0%</span></div>
+      <div class="anim-bar"><div class="anim-fill" id="paveFill"></div></div>
+    </div>
+    <button class="sm-action-btn" id="paveBtn">▶ Start Paving →</button>`;
+}
+
+/* ── COMPACT MINI-GAME ──────────────────────────────────── */
+function renderCompact() {
+  return `
+    <p class="sm-desc">Compact the road with 3 passes of the vibratory roller. Marshall density must reach <strong>≥ 98%</strong>. Compaction is done in two stages: vibratory roller (initial passes) then pneumatic-tyred roller (finishing). Temperature during compaction: <strong>110–120°C</strong>.</p>
+    <div class="compact-display">
+      <div class="compact-pct" id="compactPct">0%</div>
+      <div style="font-size:.7rem;color:var(--muted);font-family:var(--mono);margin-bottom:.5rem;">Marshall Density</div>
+      <div class="compact-bar-wrap">
+        <div class="compact-fill" id="compactFill" style="width:0%;background:var(--green);"></div>
+      </div>
+    </div>
+    <div class="passes-row" id="passesRow">
+      <div class="pass-indicator">1</div>
+      <div class="pass-indicator">2</div>
+      <div class="pass-indicator">3</div>
+    </div>
+    <div style="font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:.75rem;font-family:var(--mono);">Each pass adds ~33% compaction</div>
+    <button class="pass-btn" id="passBtn">Execute Roller Pass →</button>`;
+}
+
+/* ─── ATTACH MINI-GAME EVENTS ───────────────────────────── */
+function attachMiniGameEvents(id) {
+  if (id === 'collect') attachCollect();
+  else if (id === 'shred') attachShred();
+  else if (id === 'heat' && !gs.stepsComplete.includes('heat')) attachHeat();
+  else if (id === 'heat' && gs.stepsComplete.includes('heat')) attachCoat();
+  else if (id === 'bitumen') attachBitumen();
+  else if (id === 'pave') attachPave();
+  else if (id === 'compact') attachCompact();
+}
+
+function attachCollect() {
+  let selected = new Set();
+  document.querySelectorAll('.plastic-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const type = card.dataset.type;
+      if (selected.has(type)) { selected.delete(type); card.classList.remove('selected','selected-wrong'); }
+      else {
+        selected.add(type);
+        card.classList.add(card.dataset.ok === '1' ? 'selected' : 'selected-wrong');
+      }
+    });
+  });
+  document.getElementById('collectSubmit').addEventListener('click', () => {
+    const correct = selected.has('LDPE') && selected.has('LLDPE') && !selected.has('PVC') && !selected.has('PET');
+    const fb = document.getElementById('collectFeedback');
+    if (correct) {
+      fb.innerHTML = '<div class="feedback-msg feedback-ok">✓ Correct — LDPE and LLDPE selected. PVC and PET excluded. Proceeding to shredder.</div>';
+      gs.metrics.plasticType = 'LDPE + LLDPE ✓';
+      setTimeout(() => closeStation('collect'), 900);
+    } else {
+      gs.score = Math.max(0, gs.score - 10);
+      gs.errors++;
+      fb.innerHTML = '<div class="feedback-msg feedback-err">✗ Incorrect selection. Remember: only LDPE and LLDPE are IRC-approved. PVC releases toxic HCl gas; PET won\'t melt at process temperatures. −10 points.</div>';
+      selected.forEach(t => {
+        document.querySelector(`[data-type="${t}"]`)?.classList.remove('selected','selected-wrong');
+      });
+      selected.clear();
+      updateHUD();
+    }
+  });
+}
+
+function attachShred() {
+  const slider = document.getElementById('shredSlider');
+  const valEl  = document.getElementById('shredVal');
+  const status = document.getElementById('shredStatus');
+  const btn    = document.getElementById('shredBtn');
+
+  function updateShred() {
+    const v = parseFloat(slider.value);
+    valEl.textContent = v.toFixed(2) + ' mm';
+    const ok = v >= 2.36 && v <= 4.75;
+    status.textContent = ok ? '✓ Size within IRC:SP:98-2013 range (2.36–4.75 mm)' : (v < 2.36 ? '✗ Too fine — plastic will dust and disperse unevenly' : '✗ Too coarse — plastic won\'t melt completely at 170°C');
+    status.className = 'slider-status ' + (ok ? 's-ok' : 's-err');
+    btn.disabled = !ok;
+  }
+
+  slider.addEventListener('input', updateShred);
+  updateShred();
+
+  btn.addEventListener('click', () => {
+    btn.disabled = true;
+    gs.metrics.shredSize = parseFloat(slider.value).toFixed(2) + ' mm';
+    const prog = document.getElementById('shredProgress');
+    prog.style.display = 'block';
+    let pct = 0;
+    const iv = setInterval(() => {
+      pct = Math.min(100, pct + 3.5);
+      document.getElementById('shredFill').style.width = pct + '%';
+      document.getElementById('shredPct').textContent  = Math.round(pct) + '%';
+      if (pct >= 100) { clearInterval(iv); setTimeout(() => closeStation('shred'), 500); }
+    }, 50);
+  });
+}
+
+function attachHeat() {
+  let temp = 120;
+  let holdTime = 0;
+  let holdTarget = 5;
+  let inRange = false;
+
+  const tempNum  = document.getElementById('tempNum');
+  const tempArc  = document.getElementById('tempArc');
+  const holdBar  = document.getElementById('holdBar');
+  const holdPct  = document.getElementById('holdPct');
+  const hint     = document.getElementById('tempHint');
+  const btn      = document.getElementById('heatBtn');
+
+  function updateTempUI() {
+    tempNum.textContent = Math.round(temp);
+    tempNum.style.color = temp > 180 ? 'var(--red)' : (temp >= 165 && temp <= 170 ? 'var(--green)' : 'var(--gold)');
+    const range = 200 - 50;
+    const pct   = (temp - 50) / range;
+    const circ  = 2 * Math.PI * 70;
+    const offset = circ * (1 - pct);
+    if (tempArc) {
+      tempArc.setAttribute('stroke-dasharray', (circ * pct).toFixed(1) + ' ' + circ.toFixed(1));
+      tempArc.setAttribute('stroke', temp > 180 ? 'var(--red)' : (temp >= 165 && temp <= 170 ? 'var(--green)' : 'var(--warn)'));
+    }
+    inRange = temp >= 165 && temp <= 170;
+    hint.textContent = temp > 180 ? '⚠ Too hot — plastic will degrade. Cool down now!'
+      : inRange ? '✓ Hold steady — keep in range for 5 seconds'
+      : temp < 165 ? `Increase heat — need ${(165 - temp).toFixed(0)}°C more`
+      : `Cool slightly — reduce by ${(temp - 170).toFixed(0)}°C`;
+  }
+
+  let holdInterval = null;
+  function startHoldTimer() {
+    if (holdInterval) return;
+    holdInterval = setInterval(() => {
+      if (!inRange) { holdTime = Math.max(0, holdTime - 0.5); }
+      else { holdTime += 0.1; }
+      const pct = Math.min(100, (holdTime / holdTarget) * 100);
+      holdBar.style.width = pct + '%';
+      holdPct.textContent = Math.round(pct) + '%';
+      if (holdTime >= holdTarget) {
+        clearInterval(holdInterval);
+        gs.metrics.maxTemp = Math.round(temp) + '°C ✓';
+        btn.disabled = false;
+        btn.textContent = 'Aggregates at Temperature ✓ →';
+        hint.textContent = '✓ Aggregates heated correctly. Proceed to plastic coating.';
+      }
+    }, 100);
+  }
+
+  document.getElementById('tempUp').addEventListener('click', () => {
+    temp = Math.min(200, temp + 3);
+    if (temp > 180) { gs.score = Math.max(0, gs.score - 5); gs.errors++; updateHUD(); }
+    updateTempUI();
+    startHoldTimer();
+  });
+  document.getElementById('tempDown').addEventListener('click', () => {
+    temp = Math.max(60, temp - 3);
+    updateTempUI();
+    startHoldTimer();
+  });
+
+  btn.addEventListener('click', () => {
+    gs.stepsComplete.push('heat');
+    // Now move to coat step
+    gs.step = STEPS.findIndex(s => s.id === 'coat');
+    updateHUD();
+    document.getElementById('station-overlay').classList.add('hidden');
+    gs.paused = false;
+    // Re-open immediately with coat
+    setTimeout(() => openStation(stations.find(s => s.id === 'heat')), 300);
+  });
+
+  updateTempUI();
+}
+
+function attachCoat() {
+  let running = false;
+  document.getElementById('coatBtn').addEventListener('click', function() {
+    if (running) return;
+    running = true;
+    this.disabled = true;
+    this.textContent = 'Coating in progress…';
+    let pct = 0;
+    const msgs = ['Plastic particles contacting hot aggregates…','LDPE melting at aggregate surface (108°C)…','Uniform polymer film forming…','Coating 100% — polymer network complete ✓'];
+    const iv = setInterval(() => {
+      pct = Math.min(100, pct + 2);
+      document.getElementById('coatFill').style.width = pct + '%';
+      document.getElementById('coatPct').textContent  = Math.round(pct) + '%';
+      document.getElementById('coatStatus').textContent = msgs[Math.min(3, Math.floor(pct / 26))];
+      gs.metrics.mixQuality = Math.round(pct) + '%';
+      if (pct >= 100) {
+        clearInterval(iv);
+        setTimeout(() => closeStation('coat'), 500);
+      }
+    }, 50);
+  });
+}
+
+function attachBitumen() {
+  let started = false;
+  document.getElementById('bitBtn').addEventListener('click', function() {
+    if (started) return;
+    started = true;
+    this.disabled = true;
+    this.textContent = 'Transferring bitumen…';
+    let pct = 0;
+    const iv = setInterval(() => {
+      pct = Math.min(100, pct + 2.5);
+      document.getElementById('bitFill').style.width = pct + '%';
+      document.getElementById('bitPct').textContent  = Math.round(pct) + '%';
+      if (pct >= 100) { clearInterval(iv); setTimeout(() => closeStation('bitumen'), 500); }
+    }, 50);
+  });
+}
+
+function attachPave() {
+  let started = false;
+  let paveTemp = 150;
+  document.getElementById('paveBtn').addEventListener('click', function() {
+    if (started) return;
+    started = true;
+    this.disabled = true;
+    this.textContent = 'Paving in progress…';
+    let pct = 0;
+    gs.metrics.layTemp = '—';
+    const iv = setInterval(() => {
+      pct = Math.min(100, pct + 1.8);
+      paveTemp = Math.max(112, paveTemp - 0.2);
+      document.getElementById('paveFill').style.width = pct + '%';
+      document.getElementById('pavePct').textContent  = Math.round(pct) + '%';
+      document.getElementById('paveTemp').textContent  = paveTemp.toFixed(0) + '°C';
+      document.getElementById('paveStatus').textContent = pct < 50 ? 'Paver moving forward…' : pct < 90 ? 'Maintaining uniform thickness…' : 'Finalising layer surface…';
+      gs.metrics.layTemp = paveTemp.toFixed(0) + '°C';
+      if (pct >= 100) { clearInterval(iv); setTimeout(() => closeStation('pave'), 500); }
+    }, 60);
+  });
+}
+
+let passCount = 0;
+function attachCompact() {
+  passCount = 0;
+  const btn = document.getElementById('passBtn');
+  btn.addEventListener('click', doPass);
+}
+
+function doPass() {
+  if (passCount >= 3) return;
+  const btn = document.getElementById('passBtn');
+  btn.disabled = true;
+  btn.textContent = 'Rolling…';
+  passCount++;
+  const pct = Math.min(99, passCount * 33);
+  document.getElementById('compactPct').textContent = pct + '%';
+  const fill = document.getElementById('compactFill');
+  fill.style.width = pct + '%';
+  fill.style.background = pct >= 98 ? 'var(--green)' : (pct >= 66 ? 'var(--gold)' : 'var(--warn)');
+  // Passes indicators
+  document.querySelectorAll('.pass-indicator').forEach((el, i) => {
+    if (i < passCount) el.classList.add('done');
+  });
+  gs.metrics.compaction = pct + '%';
+  setTimeout(() => {
+    if (passCount < 3) {
+      btn.disabled = false;
+      btn.textContent = `Execute Roller Pass ${passCount + 1} →`;
+    } else {
+      document.getElementById('compactPct').textContent = '99%';
+      fill.style.width = '99%';
+      gs.metrics.compaction = '99% ✓';
+      btn.textContent = '✓ Compaction Complete →';
+      btn.addEventListener('click', () => closeStation('compact'), { once: true });
+      btn.disabled = false;
+    }
+  }, 1200);
+}
+
+/* ─── SHOW COMPLETE ─────────────────────────────────────── */
+function showComplete() {
+  document.getElementById('game-container').style.display = 'none';
+  const screen = document.getElementById('complete');
+  screen.classList.remove('hidden');
+
+  const finalScore = gs.score;
+  document.getElementById('finalScore').textContent = finalScore;
+
+  const grade = finalScore >= 90 ? 'Excellent — Professional Grade Road'
+    : finalScore >= 75 ? 'Good — Meets IRC:SP:98-2013 Specification'
+    : finalScore >= 60 ? 'Acceptable — Minor deviations from standard'
+    : 'Below Standard — Significant process errors';
+
+  document.getElementById('completeDesc').textContent =
+    `Road section complete. ${grade}. All 7 process steps of the IRC dry process were executed. ` +
+    (gs.errors > 0 ? `${gs.errors} parameter error(s) detected during the process, resulting in score deductions.` :
+     'No errors — perfect process execution.');
+
+  // Metrics
+  const m = gs.metrics;
+  const grid = document.getElementById('metricsGrid');
+  const metrics = [
+    { val: m.plasticType || '—', lbl: 'Plastic Type' },
+    { val: m.shredSize   || '—', lbl: 'Shred Size' },
+    { val: m.maxTemp     || '—', lbl: 'Heat Temp' },
+    { val: m.mixQuality  || '—', lbl: 'Coating' },
+    { val: m.layTemp     || '—', lbl: 'Lay Temp' },
+    { val: m.compaction  || '—', lbl: 'Compaction' },
+  ];
+  grid.innerHTML = metrics.map(m => `<div class="metric-card"><div class="mc-val">${m.val}</div><div class="mc-lbl">${m.lbl}</div></div>`).join('');
+}
+
+/* ─── TOOLTIP ───────────────────────────────────────────── */
+let tooltipTimer = null;
+function showTooltip(msg) {
+  const el = document.getElementById('tooltip');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(tooltipTimer);
+  tooltipTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+/* ─── GAME LOOP ─────────────────────────────────────────── */
+let lastTime = 0;
+let particleTimer = 0;
+function loop(ts) {
+  requestAnimationFrame(loop);
+  const dt = Math.min((ts - lastTime) / 1000, 0.05);
+  lastTime = ts;
+  if (!gs.paused) {
+    movePlayer(dt);
+    checkNear();
+    updateParticles(dt);
+
+    // Station-ambient particles
+    particleTimer += dt;
+    if (particleTimer > 0.4) {
+      particleTimer = 0;
+      const heaterSt = stations.find(s => s.id === 'heat');
+      if (heaterSt) {
+        spawnParticles(heaterSt.px + heaterSt.pw / 2, heaterSt.py,
+          gs.stepsComplete.includes('heat') ? 'rgba(42,157,92,0.4)' : 'rgba(224,123,57,0.35)', 3, 20);
+      }
+    }
+  }
+  draw();
+}
+
+/* ─── START ─────────────────────────────────────────────── */
+function startGame() {
+  initState();
+  document.getElementById('intro').classList.add('hidden');
+  const gc = document.getElementById('game-container');
+  gc.style.display = 'flex';
+  layout();
+  updateHUD();
+  showTooltip('Walk to the Plastic Collection Zone (top-left) and press E');
+  lastTime = performance.now();
+  requestAnimationFrame(loop);
+}
+
+document.getElementById('startBtn').addEventListener('click', startGame);
+
+document.getElementById('playAgainBtn').addEventListener('click', () => {
+  document.getElementById('complete').classList.add('hidden');
+  startGame();
+});
+
+/* ─── RESIZE ────────────────────────────────────────────── */
+window.addEventListener('resize', layout);
+</script>
+</body>
+</html>

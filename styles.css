@@ -191,6 +191,29 @@ ul { list-style: none; }
 .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+.nav-sim-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: .4rem 1rem;
+  background: rgba(42,157,92,0.12);
+  color: var(--mint);
+  font-size: .76rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  border: 1px solid rgba(42,157,92,0.28);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-sim-btn:hover {
+  background: var(--green);
+  color: var(--white);
+  border-color: var(--green);
+  box-shadow: 0 4px 20px rgba(42,157,92,.3);
+  transform: translateY(-1px);
+}
+
 /* ─── HERO ────────────────────────────────────────────────── */
 .hero {
   min-height: 100vh;
